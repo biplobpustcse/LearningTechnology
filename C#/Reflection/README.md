@@ -1,4 +1,5 @@
-Reflection in C# is a powerful feature that allows you to inspect and manipulate code at runtime.
+## Reflection
+Reflection in C# is a powerful feature that allows you to **inspect and manipulate code at runtime**.
 
 #### What is Reflection?
 Reflection is the ability to inspect and interact with the metadata of types at runtime. It allows you to:
