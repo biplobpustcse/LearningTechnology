@@ -69,7 +69,8 @@ export class AppComponent {
   users:any =[{id: 0, name: 'Sarah'}, {id: 1, name: 'Amy'}, {id: 2, name: 'Rachel'}, {id: 3, name: 'Jessica'}, {id: 4, name: 'Poornima'}];
 }
 ```
-**NOTE:** the use of track is required, you may use the id or some other unique identifier.
+> [!NOTE]
+> The use of track is required; you may use the id or some other unique identifier.
 
 #### 4. Property Binding in Angular
 Property binding in Angular enables you to set values for properties of HTML elements, Angular components and more.
@@ -102,5 +103,6 @@ export class AppComponent {
   isEditable:boolean = true;
 }
 ```
+
 
 
