@@ -121,7 +121,7 @@ class AppComponent {
 
 #### 6. Component Communication with @Input
 Sometimes app development requires you to send data into a component. This data can be used to customize a component or perhaps **send information from a parent component to a child component.**
-
+**interpolation syntax {{}}**
 user.components.ts
 ```
 @Component({
@@ -343,3 +343,71 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 })
 ```
 When you click on the links in the navigation now, you should not see any blinking and only the content of the page itself (i.e., router-outlet) being changed 🎉
+#### 13. Forms Overview [More](https://angular.dev/tutorials/learn-angular/15-forms)
+Forms are a big part of many apps because they enable your app to accept user input. Let's learn about how forms are handled in Angular.
+
+- Create an input field
+- Import FormsModule
+- Add binding to the value of the input
+The FormsModule has a directive called ngModel that binds the value of the input to a property in your class.
+```
+<label for="framework">
+  Favorite Framework:
+  <input id="framework" type="text" [(ngModel)]="favoriteFramework" />
+</label>
+```
+> [!NOTE]
+> The syntax [()] is known as "banana in a box" but it represents two-way binding: property binding and event binding. Learn more in the Angular docs about two-way data binding.
+#### 14. Reactive Forms
+When you want to manage your forms programmatically instead of relying purely on the template, reactive forms are the answer.
+You'll learn how to set up reactive forms.
+**Import ReactiveForms module**
+In app.component.ts, import ReactiveFormsModule from @angular/forms and add it to the imports array of the component.
+```
+import { ReactiveFormsModule } from '@angular/forms';
+@Component({
+  selector: 'app-root',
+  template: `
+    <form>
+      <label>Name
+        <input type="text" />
+      </label>
+      <label>Email
+        <input type="email" />
+      </label>
+      <button type="submit">Submit</button>
+    </form>
+  `,
+  imports: [ReactiveFormsModule],
+})
+```
+**Create the FormGroup object with FormControls**
+Add FormControl and FormGroup to the import from @angular/forms so that you can create a FormGroup for each form, with the properties name and email as FormControls.
+```
+import {ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
+...
+export class AppComponent {
+  profileForm = new FormGroup({
+    name: new FormControl(''),
+    email: new FormControl(''),
+  });
+}
+```
+**Link the FormGroup and FormControls to the form** [More](https://angular.dev/tutorials/learn-angular/17-reactive-forms)
+
+Each FormGroup should be attached to a form using the [formGroup] directive.
+
+In addition, each FormControl can be attached with the formControlName directive and assigned to the corresponding property. Update the template with the following form code:
+```
+<form [formGroup]="profileForm">
+  <label>
+    Name
+    <input type="text" formControlName="name" />
+  </label>
+  <label>
+    Email
+    <input type="email" formControlName="email" />
+  </label>
+  <button type="submit">Submit</button>
+</form>
+```
