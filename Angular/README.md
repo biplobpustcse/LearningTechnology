@@ -170,3 +170,79 @@ app.components.ts
 ```
 <app-child (addItemEvent)="addItem($event)" />
 ```
+#### 8. Deferrable Views
+Sometimes in app development, you end up with a lot of components that you need to reference in your app, but some of those don't need to be loaded right away for various reasons.
+
+Maybe they are below the visible fold or are heavy components that aren't interacted with until later. In that case, we can load some of those resources later with deferrable views.
+
+Add a @loading block to the @defer block. The @loading block is where you put html that will show while the deferred content is actively being fetched, but hasn't finished yet. The content in @loading blocks is eagerly loaded.
+```
+@defer {
+  <comments />
+} @placeholder {
+  <p>Future comments</p>
+} @loading {
+  <p>Loading comments...</p>
+}
+```
+#### 9. Optimizing images
+Images are a big part of many applications, and can be a major contributor to application performance problems, including low Core Web Vitals scores.
+
+Image optimization can be a complex topic, but Angular handles most of it for you, **with the NgOptimizedImage directive.**
+
+**NgOptimizedImage to ensure your images are loaded efficiently.**
+Import the NgOptimizedImage directive
+```
+import { NgOptimizedImage } from '@angular/common';
+@Component({
+  imports: [NgOptimizedImage],
+  ...
+})
+```
+**Update the src attribute to be ngSrc**
+
+To enable the NgOptimizedImage directive, swap out the src attribute for ngSrc. This applies for both static image sources (i.e., src) and dynamic image sources (i.e., [src]).
+```
+import { NgOptimizedImage } from '@angular/common';
+@Component({
+template: `     ...
+    <li>
+      Static Image:
+      <img ngSrc="/assets/logo.svg" alt="Angular logo" width="32" height="32" />
+    </li>
+    <li>
+      Dynamic Image:
+      <img [ngSrc]="logoUrl" [alt]="logoAlt" width="32" height="32" />
+    </li>
+    ...
+  `,
+imports: [NgOptimizedImage],
+})
+```
+**Add width and height attributes**
+Note that in the above code example, each image has both width and height attributes. In order to prevent layout shift, the NgOptimizedImage directive requires both size attributes on each image.
+
+In situations where you can't or don't want to specify a static height and width for images, you can use the fill attribute to tell the image to act like a "background image", filling its containing element:
+```
+<div class="image-container"> //Container div has 'position: "relative"'
+  <img ngSrc="www.example.com/image.png" fill />
+</div>
+```
+Prioritize important images
+One of the most important optimizations for loading performance is to prioritize any image which might be the "LCP element", which is the largest on-screen graphical element when the page loads. To optimize your loading times, make sure to add the priority attribute to your "hero image" or any other images that you think could be an LCP element.
+```
+<img ngSrc="www.example.com/image.png" height="600" width="800" priority />
+```
+Optional: Use an image loader
+NgOptimizedImage allows you to specify an image loader, which tells the directive how to format URLs for your images. Using a loader allows you to define your images with short, relative URLs:
+```
+providers: [
+  provideImgixLoader('https://my.base.url/'),
+]
+```
+Final URL will be 'https://my.base.url/image.png'
+```
+<img ngSrc="image.png" height="600" width="800" />
+```
+Image loaders are for more than just convenience--they allow you to use the full capabilities of NgOptimizedImage.
+
