@@ -103,6 +103,22 @@ export class AppComponent {
   isEditable:boolean = true;
 }
 ```
+#### 5. Event handling
+Event handling enables interactive features on web apps. It gives you the ability as a developer to respond to user actions like button presses, form submissions and more.
+
+**In Angular you bind to events with the parentheses syntax ()**
+```
+@Component({
+    ...
+    template: `<button (click)="greet()">`
+})
+class AppComponent {
+    greet() {
+        console.log('Hello, there 👋');
+    }
+}
+```
+
 
 
 
