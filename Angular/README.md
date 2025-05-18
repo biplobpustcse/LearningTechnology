@@ -119,6 +119,54 @@ class AppComponent {
 }
 ```
 
+#### 6. Component Communication with @Input
+Sometimes app development requires you to send data into a component. This data can be used to customize a component or perhaps **send information from a parent component to a child component.**
 
+user.components.ts
+```
+@Component({
+  ...
+  template: `<p>The user's occupation is {{occupation}}</p>`
+})
 
+class UserComponent {
+  @Input() occupation = '';
+}
+```
+app.components.ts
+```
+@Component({
+  ...
+  template: `<app-user occupation="Angular Developer"></app-user>`
+})
+class AppComponent {}
+```
+#### 7. Component Communication with @Output
+When working with components, it may be required to notify other components that something has happened. Perhaps a button has been clicked, an item has been added/removed from a list, or some other important update has occurred. In this scenario, components need **to communicate with parent components.**
 
+Angular uses the @Output decorator to enable this type of behavior.
+
+child.components.ts
+```
+import {Component, Output, EventEmitter} from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  styles: `.btn { padding: 5px; }`,
+  template: `
+    <button class="btn" (click)="addItem()">Add Item</button>
+  `,
+})
+
+export class ChildComponent {
+    @Output() addItemEvent = new EventEmitter<number>();
+
+    addItem() {
+      this.addItemEvent.emit('🐢');
+    }
+}
+```
+app.components.ts
+```
+<app-child (addItemEvent)="addItem($event)" />
+```
