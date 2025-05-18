@@ -188,7 +188,7 @@ Add a @loading block to the @defer block. The @loading block is where you put ht
 #### 9. Optimizing images
 Images are a big part of many applications, and can be a major contributor to application performance problems, including low Core Web Vitals scores.
 
-Image optimization can be a complex topic, but Angular handles most of it for you, **with the NgOptimizedImage directive.**
+**Image optimization can be a complex topic**, but Angular handles most of it for you, **with the NgOptimizedImage directive.**
 
 **NgOptimizedImage to ensure your images are loaded efficiently.**
 Import the NgOptimizedImage directive
