@@ -298,3 +298,48 @@ export class AppComponent {}
 ![Route Menu](https://github.com/user-attachments/assets/86db05e0-36d1-4be4-a0ee-1dcba0143289)
 
 Your app is now set up to use Angular Router. Nice work! 🙌
+#### 11. Define a Route
+Define a route in **app.routes.ts**
+
+**path, title, component**
+```
+import {Routes} from '@angular/router';
+import {HomeComponent} from './home/home.component';
+export const routes: Routes = [
+{
+path: '',
+title: 'App Home Page',
+component: HomeComponent,
+},
+];
+```
+#### 12. Use RouterLink for Navigation
+**In the app's current state, the entire page refreshes when we click on an internal link that exists within the app.** While this may not seem significant with a small app, this can have performance implications for larger pages with more content where users have to redownload assets and run calculations again.
+
+We'll learn how to leverage the RouterLink directive to make the most use of Angular Router.
+**Import RouterLink directive**
+In **app.component.ts** add the RouterLink directive import to the existing import statement from @angular/router and add it to the imports array of your component decorator.
+```
+...
+import { RouterLink, RouterOutlet } from '@angular/router';
+@Component({
+  imports: [RouterLink, RouterOutlet],
+  ...
+})
+```
+**Add a routerLink to template**
+To use the RouterLink directive, replace the href attributes with routerLink. Update the template with this change.
+```
+import { RouterLink, RouterOutlet } from '@angular/router';
+@Component({
+  ...
+  template: `
+    ...
+    <a routerLink="/">Home</a>
+    <a routerLink="/user">User</a>
+    ...
+  `,
+  imports: [RouterLink, RouterOutlet],
+})
+```
+When you click on the links in the navigation now, you should not see any blinking and only the content of the page itself (i.e., router-outlet) being changed 🎉
