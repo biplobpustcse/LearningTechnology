@@ -246,3 +246,55 @@ Final URL will be 'https://my.base.url/image.png'
 ```
 Image loaders are for more than just convenience--they allow you to use the full capabilities of NgOptimizedImage.
 
+#### 10. Routing Overview
+For most apps, there comes a point where the app requires more than a single page. When that time inevitably comes, routing becomes a big part of the performance story for users.
+
+As users perform application tasks, they need to move between the different views that you have defined.
+
+To handle the navigation from one view to the next, you use the Angular **Router**. The **Router** enables navigation by interpreting a browser URL as an instruction to change the view.
+
+**Create an app.routes.ts file**
+Inside **app.routes.ts**, make the following changes:
+
+1. Import Routes from the @angular/router package.
+2. Export a constant called routes of type Routes, assign it [] as the value.
+```
+import {Routes} from '@angular/router';
+export const routes: Routes = [];
+```
+**Add routing to provider**
+In **app.config.ts**, configure the app to Angular Router with the following steps:
+
+1. Import the provideRouter function from @angular/router.
+2. Import routes from the ./app.routes.ts.
+3. Call the provideRouter function with routes passed in as an argument in the providers array.
+```
+import {ApplicationConfig} from '@angular/core';
+import {provideRouter} from '@angular/router';
+import {routes} from './app.routes';
+export const appConfig: ApplicationConfig = {
+providers: [provideRouter(routes)],
+};
+```
+**Import RouterOutlet in the component**
+Finally, to make sure your app is ready to use the Angular Router, you need to tell the app where you expect the router to display the desired content. Accomplish that by using the RouterOutlet directive from @angular/router.
+
+Update the template for AppComponent by adding <router-outlet />
+```
+import {RouterOutlet} from '@angular/router';
+@Component({
+...
+template: `     <nav>
+      <a href="/">Home</a>
+      |
+      <a href="/user">User</a>
+    </nav>
+    <router-outlet />
+  `,
+imports: [RouterOutlet],
+})
+export class AppComponent {}
+```
+![Route Menu](https://github.com/user-attachments/assets/86db05e0-36d1-4be4-a0ee-1dcba0143289)
+
+Your app is now set up to use Angular Router. Nice work! 🙌
