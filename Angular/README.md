@@ -411,3 +411,22 @@ In addition, each FormControl can be attached with the formControlName directive
   <button type="submit">Submit</button>
 </form>
 ```
+**ReactiveFormsModule**
+Another common scenario when working with forms is the need to validate the inputs to ensure the correct data is submitted.
+
+Import Validators
+```
+import {ReactiveFormsModule, Validators} from '@angular/forms';
+@Component({...})
+export class AppComponent {}
+```
+**Add validation to form**
+
+Every FormControl can be passed the Validators you want to use for validating the FormControl values. For example, if you want to make the name field in profileForm required then use Validators.required. For the email field in our Angular form, we want to ensure it's not left empty and follows a valid email address structure. We can achieve this by combining the Validators.required and Validators.email validators in an array. Update the name and email FormControl:
+```
+profileForm = new FormGroup({
+  name: new FormControl('', Validators.required),
+  email: new FormControl('', [Validators.required, Validators.email]),
+});
+```
+
