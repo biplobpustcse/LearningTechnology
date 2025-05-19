@@ -606,6 +606,24 @@ export const appConfig: ApplicationConfig = {
   ]
 };
 ```
+## First Angular App - [Link](https://angular.dev/tutorials/first-app/01-hello-world)
+In the Terminal pane of your IDE:
+
+1. In your project directory, navigate to the first-app directory.
+
+2. Run this command to install the dependencies needed to run the app.
+```
+npm install
+```
+3. Run this command to build and serve the default app.
+```
+ng serve
+```
+4. In a web browser on your development computer, open http://localhost:4200.
+
+5. Confirm that the default web site appears in the browser.
+
+6. You can leave ng serve running as you complete the next steps.
 
 
 
