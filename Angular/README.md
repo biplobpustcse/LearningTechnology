@@ -429,4 +429,61 @@ profileForm = new FormGroup({
   email: new FormControl('', [Validators.required, Validators.email]),
 });
 ```
+#### 15. Creating an injectable service
+Dependency injection (DI) in Angular is one of the framework's most powerful features. Consider dependency injection to be the ability for Angular to provide resources you need for your application at runtime. A dependency could be a service or some other resources.
+```
+import {Injectable} from '@angular/core';
+
+export class CarService {
+  cars = ['Sunflower GT', 'Flexus Sport', 'Sprout Mach One'];
+
+  getCars(): string[] {
+    return this.cars;
+  }
+
+  getCar(id: number) {
+    return this.cars[id];
+  }
+}
+```
+
+#### 16. Inject-based dependency injection
+Creating an injectable service is the first part of the dependency injection (DI) system in Angular. How do you inject a service into a component? Angular has a convenient function called inject() that can be used in the proper context.
+```
+import {Component, inject} from '@angular/core';
+import {CarService} from './car.service';
+
+@Component({
+  selector: 'app-root',
+  template: `<p>Car Listing: {{ display }}</p>`,
+})
+export class AppComponent {
+  carService = inject(CarService);
+  display = '';
+
+  constructor() {
+    this.display = this.carService.getCars().join(' ⭐️ ');
+  }
+}
+```
+#### 17. Constructor-based dependency injection
+In previous activities you used the inject() function to make resources available, "providing" them to your components. The inject() function is one pattern and it is useful to know that there is another pattern for injecting resources called **constructor-based dependency injection.**
+```
+import {Component, inject} from '@angular/core';
+import {CarService} from './car.service';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <p>Car Listing: {{ display }}</p>
+  `,
+})
+export class AppComponent {
+  display = '';
+
+  constructor(private carService: CarService) {
+    this.display = this.carService.getCars().join(' ⭐️ ');
+  }
+}
+```
 
