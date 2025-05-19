@@ -592,3 +592,20 @@ export class AppComponent {
   word = 'You are a champion';
 }
 ```
+#### 21. HTTP client 
+Most front-end applications need to communicate with a server over the HTTP protocol, to download or upload data and access other back-end services. Angular provides a client HTTP API for Angular applications, the HttpClient service class in @angular/common/http.
+
+Setting up HttpClient
+
+**Providing HttpClient through dependency injection**
+HttpClient is provided using the provideHttpClient helper function, which most apps include in the application providers in app.config.ts.
+```
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideHttpClient(),
+  ]
+};
+```
+
+
+
