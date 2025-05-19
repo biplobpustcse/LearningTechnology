@@ -486,4 +486,92 @@ export class AppComponent {
   }
 }
 ```
+#### 18. Pipes
+Pipes are functions that are used to transform data in templates. In general, pipes are "pure" functions that don't cause side effects. Angular has a number of helpful built-in pipes you can import and use in your components. You can also create a custom pipe.
 
+To use a pipe in a template, include it in an interpolated expression. Check out this example:**UpperCasePipe,LowerCasePipe**
+```
+import {UpperCasePipe} from '@angular/common';
+@Component({
+...
+import {Component} from '@angular/core';
+import {UpperCasePipe} from '@angular/common';
+import { LowerCasePipe } from '@angular/common';
+
+@Component({
+  selector: 'app-root',
+  template: `
+  {{ username | uppercase}}<br>
+  {{ username | lowercase}}
+  `,
+  imports: [UpperCasePipe, LowerCasePipe],
+})
+export class AppComponent {
+  username = 'yOunGTECh';
+}
+```
+#### 19. Formatting data with pipes
+You can take your use of pipes even further by configuring them. Pipes can be configured by passing options to them.
+
+**DecimalPipe, DatePipe, CurrencyPipe**
+```
+import {Component} from '@angular/core';
+import {DecimalPipe, DatePipe, CurrencyPipe} from '@angular/common';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <ul>
+      <li>Number with "decimal" {{ num | number:"3.1-2"}}</li>
+      <li>Date with "date" {{ birthday | date}}</li>
+       <li>Date with "date" {{ birthday | date:"fullDate"}}</li>
+      <li>Currency with "currency" {{ cost | currency}}</li>
+    </ul>
+  `,
+  imports: [DecimalPipe, DatePipe, CurrencyPipe],
+})
+export class AppComponent {
+  num = 103.1234;
+  birthday = new Date(2023, 3, 2);
+  cost = 4560.34;
+}
+```
+#### 20. Create a custom pipe
+You can create custom pipes in Angular to fit your data transformation needs.
+
+**Create the ReversePipe**
+- In reverse.pipe.ts add the @Pipe decorator to the ReversePipe class and provide the following configuration:
+- Implement the transform function
+```
+import {Pipe, PipeTransform} from '@angular/core';
+
+@Pipe({
+    name: 'reverse'
+})
+  
+export class ReversePipe implements PipeTransform {
+    transform(value: string): string {
+        let reverse = '';
+        for (let i = value.length - 1; i >= 0; i--) {
+            reverse += value[i];
+        }
+        return reverse;
+    }
+}
+```
+**Use the ReversePipe in the template**
+```
+import {Component} from '@angular/core';
+import {ReversePipe} from './reverse.pipe';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    Reverse Machine: {{ word | reverse}}
+  `,
+  imports: [ReversePipe],
+})
+export class AppComponent {
+  word = 'You are a champion';
+}
+```
