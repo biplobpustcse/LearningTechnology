@@ -168,7 +168,24 @@ export class ChildComponent {
 ```
 app.components.ts
 ```
-<app-child (addItemEvent)="addItem($event)" />
+import {Component} from '@angular/core';
+import {ChildComponent} from './child.component';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <app-child (addItemEvent)="addItem($event)" />
+    <p>🐢 all the way down {{ items.length }}</p>
+  `,
+  imports: [ChildComponent],
+})
+export class AppComponent {
+  items = new Array();
+
+  addItem(item: string) {
+    this.items.push(item);
+  }
+}
 ```
 #### 8. Deferrable Views
 Sometimes in app development, you end up with a lot of components that you need to reference in your app, but some of those don't need to be loaded right away for various reasons.
