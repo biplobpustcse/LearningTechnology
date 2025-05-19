@@ -625,5 +625,17 @@ ng serve
 
 6. You can leave ng serve running as you complete the next steps.
 
+```
+ng generate component home --standalone --inline-template
+```
 
+```
+ng g interface housingLocation
+```
+```
+ng g service housing --skip-tests
+```
+```
+ng generate component details --standalone --inline-template
+```
 
