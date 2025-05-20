@@ -1,4 +1,26 @@
     <div class="container mt-5">
       <h3>Welcome! You are logged in.</h3>
+
+      <section>
+        <form>
+          <input type="text" placeholder="Filter by city" #filter />
+          <button class="primary" type="button" (click)="filterResults(filter.value)">Search</button>
+        </form>
+      </section>
+      <section class="listing">
+        <div *ngFor="let housingLocation of filteredLocationList">
+          <a [routerLink]="['/details', housingLocation.id]">
+            <img
+              class="listing-photo"
+              [src]="housingLocation.photo"
+              alt="Exterior photo of {{ housingLocation.name }}"
+              crossorigin
+            />
+            <h2 class="listing-heading">{{ housingLocation.name }}</h2>
+            <p class="listing-location">{{ housingLocation.city }}, {{ housingLocation.state }}</p>
+            </a>
+        </div>
+      </section>
+
       <button class="btn btn-danger mt-3" (click)="logout()">Logout</button>
     </div>
