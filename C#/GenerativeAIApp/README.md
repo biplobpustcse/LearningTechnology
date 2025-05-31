@@ -1,63 +1,19 @@
-## Reflection
-Reflection in C# is a powerful feature that allows you to **inspect and manipulate code at runtime**.
+## Generative AI
+Generative AI is** a type of artificial intelligence that creates new content, such as text, images, videos, and music, by learning patterns from existing data**. It's powered by large AI models called foundation models, which can perform various tasks like summarization, Q&A, and classification. Generative AI has a wide range of applications, including content creation, product design, scientific research, and more. 
 
-#### What is Reflection?
-Reflection is the ability to inspect and interact with the metadata of types at runtime. It allows you to:
+**What it does:**
+1. **Generates new content:** Generative AI uses machine learning to analyze existing data and then produce new, unique outputs.
+2. **Learns from data:** It learns patterns and relationships within the data it's trained on.
+3. **Creates diverse content:** It can generate various forms of data, including text, images, audio, videos, and even 3D models. 
 
-- Get information about assemblies, modules, and types.
-- Discover and invoke methods and properties dynamically.
-- Create instances of types at runtime.
+### Popular examples:
 
-#### Why Use Reflection?
-- Dynamic Type Discovery: Useful in scenarios where types are not known at compile time.
-- Late Binding: Allows methods and properties to be invoked dynamically.
-- Metadata Inspection: Enables tools like debuggers, IDEs, and serialization libraries to inspect and manipulate code.
+**Text:** ChatGPT, GPT-4
 
-#### Getting Started with Reflection
-Let’s start with a basic example to illustrate how to use reflection to inspect a type’s metadata.
+**Images:** DALL·E, Midjourney
 
-Step-by-Step Example: Inspecting a Type’s Metadata
-- 1 — Define a Sample Class
-```
-public class Person
-{
-    public string Name { get; set; }
-    public int Age { get; set; }
+**Code:** GitHub Copilot
 
-    public void SayHello()
-    {
-        Console.WriteLine($"Hello, my name is {Name} and I am {Age} years old.");
-    }
-}
-```
-- 2 — Using Reflection to Inspect the Person Class
-```
-using System;
-using System.Reflection;
+**Audio/Music:** Jukebox, Soundraw
 
-class Program
-{
-    static void Main()
-    {
-        // Get the type of the Person class
-        Type personType = typeof(Person);
-
-        // Display the full name of the type
-        Console.WriteLine("Type: " + personType.FullName);
-
-        // Display the properties of the type
-        Console.WriteLine("Properties:");
-        foreach (PropertyInfo property in personType.GetProperties())
-        {
-            Console.WriteLine("- " + property.Name + " (" + property.PropertyType.Name + ")");
-        }
-
-        // Display the methods of the type
-        Console.WriteLine("Methods:");
-        foreach (MethodInfo method in personType.GetMethods())
-        {
-            Console.WriteLine("- " + method.Name);
-        }
-    }
-}
-```
+**Video:** Sora by OpenAI
