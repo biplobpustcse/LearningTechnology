@@ -19,7 +19,8 @@ Generative AI is** a type of artificial intelligence that creates new content, s
 **Video:** Sora by OpenAI
 
 ## Azure OpenAI
-
+Welcome to Azure OpenAI
+Explore the **generative AI models** and craft unique prompts for your use cases.
 #### Azure AI Foundry | Azure OpenAI
 ![Chat playground](https://github.com/user-attachments/assets/c3288da7-1762-44a4-8e68-07fd56777996)
 
