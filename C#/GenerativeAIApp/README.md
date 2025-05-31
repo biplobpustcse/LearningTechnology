@@ -17,3 +17,9 @@ Generative AI is** a type of artificial intelligence that creates new content, s
 **Audio/Music:** Jukebox, Soundraw
 
 **Video:** Sora by OpenAI
+
+## Azure OpenAI
+
+#### Azure AI Foundry | Azure OpenAI
+![Chat playground](https://github.com/user-attachments/assets/c3288da7-1762-44a4-8e68-07fd56777996)
+
