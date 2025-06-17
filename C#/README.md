@@ -1,4 +1,4 @@
-
+## Questions and answers
 **1. What is .NET Core?**<br/>
 .NET Core is a free, open-source, cross-platform (Windows, macOS, Linux) framework created by Microsoft for building modern high-performance applications, including web, cloud, mobile backends and microservices architectures. 
 
@@ -12,6 +12,45 @@ Middleware are reusable software components in the HTTP pipeline that handle inc
 **Use Middleware** for things like CORS, exception handling, authentication.
 
 **Execution Time**	Runs before routing (and after, depending on order)
+
+✅ **Common Built-in Middleware in ASP.NET Core**
+
+| Middleware                  | Purpose                                                            |
+| --------------------------- | ------------------------------------------------------------------ |
+| `UseRouting`                | Matches the request to route endpoints                             |
+| `UseEndpoints`              | Executes the endpoint (like controller actions, Razor pages, etc.) |
+| `UseAuthentication`         | Authenticates users                                                |
+| `UseAuthorization`          | Authorizes users based on policies and roles                       |
+| `UseStaticFiles`            | Serves static files (e.g., CSS, JS, images) from `wwwroot`         |
+| `UseCors`                   | Enables Cross-Origin Resource Sharing                              |
+| `UseExceptionHandler`       | Global exception handling and error pages                          |
+| `UseDeveloperExceptionPage` | Shows detailed exception info in development environment           |
+| `UseHttpsRedirection`       | Redirects HTTP requests to HTTPS                                   |
+| `UseStatusCodePages`        | Returns user-friendly status code pages (like 404, 500, etc.)      |
+| `UseResponseCompression`    | Compresses response bodies                                         |
+| `UseResponseCaching`        | Enables caching of responses                                       |
+| `UseSession`                | Enables session state management                                   |
+| `UseWebSockets`             | Supports WebSocket communication                                   |
+| `UseHealthChecks`           | Adds health check endpoints for monitoring                         |
+
+
+**Register Middleware in Program.cs**
+```
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+// Register custom middleware
+app.UseMiddleware<RequestLoggingMiddleware>();
+app.UseRouting();
+
+app.UseAuthentication(); // Login required?
+app.UseAuthorization();  // Check user roles/permissions
+
+app.MapGet("/", () => "Hello, World!");
+
+app.Run();
+
+```
 
 **4. What is filters in .net core?**
 <br/>
@@ -37,6 +76,35 @@ In ASP.NET Core, filters are components that allow you to execute custom logic a
 | Good for **global concerns**       | Good for **MVC/Web API logic**       |
 | Executes early (before routing)    | Executes after routing               |
 | Applied in `Program.cs/Startup.cs` | Applied via attributes or globally   |
+
+**5. What is dependency injection in .net core?**
+<br/>
+Dependency injection (DI) in .NET Core is a design pattern that promotes loose coupling and testability by providing dependencies to a class from an external source rather than having the class create them itself.<br/>
+It involves separating a class's dependencies from its implementation, allowing for greater flexibility and easier modification.
+
+**Injection Types:**
+
+There are three main ways to inject dependencies:
+- **Constructor Injection:** The most common approach, where dependencies are passed through the constructor of a class. 
+- **Property Injection:** Dependencies are injected through properties of a class. 
+- **Method Injection:** Dependencies are injected through a method parameter. 
+
+**Service Container:**
+.NET Core provides a built-in service container (or IoC container) that manages the registration and resolution of dependencies. 
+
+**🧰 Lifetime Options in .NET Core DI:**
+
+| Lifetime  | Description                            |
+| --------- | -------------------------------------- |
+| Singleton | Same instance for the entire app       |
+| Scoped    | One instance per HTTP request          |
+| Transient | New instance every time it's requested |
+
+**Program.cs**
+```
+services.AddScoped<IProductRepository, ProductRepository>();
+services.AddScoped<ProductService>();
+```
 
 
 
