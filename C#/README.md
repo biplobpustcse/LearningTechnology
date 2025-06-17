@@ -106,5 +106,91 @@ services.AddScoped<IProductRepository, ProductRepository>();
 services.AddScoped<ProductService>();
 ```
 
+**6. What is the .NET CLI?**
+<br/>
+The .NET CLI (Command Line Interface) is a cross-platform toolchain for developing, building, running, and publishing .NET applications.
 
+Examples:
+- dotnet new – create a new project
+- dotnet build – compile code
+- dotnet run – run application
+
+**7. Authentication**
+
+**Definition:**
+Authentication is the process of verifying the identity of a user or system.
+
+**Example:**
+When a user logs in using a username and password, the application verifies who the user is.
+
+**Common methods in .NET Core:**
+- Cookie-based Authentication (common in web apps)
+- JWT (JSON Web Tokens) for APIs
+- OAuth 2.0 and OpenID Connect (for third-party providers like Google, Facebook, etc.)
+- Identity framework (ASP.NET Core Identity)
+
+**Setup Example (JWT-based Authentication):**
+```
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.Authority = "https://your-auth-server";
+        options.Audience = "your-api";
+    });
+```
+
+**8. Authorization**
+<br/>
+**Definition:**
+Authorization is the process of determining what a user is allowed to do after authentication.
+
+**Example:**
+After a user logs in, you check whether they are allowed to access an admin panel or perform a specific action.
+
+**Authorization Types in .NET Core:**
+- Role-based Authorization
+- Policy-based Authorization
+- Claims-based Authorization
+
+**Role-based Example:**
+```
+// Add Authorization service
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy =>
+        policy.RequireRole("Admin"));
+});
+
+var app = builder.Build();
+app.UseStaticFiles();
+
+// Enable authentication & authorization middleware
+app.UseAuthentication();  // <-- Must come before UseAuthorization
+app.UseAuthorization();
+
+[Authorize(Roles = "Admin")]
+public IActionResult AdminOnly()
+{
+    return View();
+}
+```
+**Policy-based Example:**
+```
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("MustBeHR", policy =>
+        policy.RequireClaim("Department", "HR"));
+});
+
+[Authorize(Policy = "MustBeHR")]
+public IActionResult HRPortal()
+{
+    return View();
+}
+```
+**Summary Table:**
+| Concept        | Purpose                         | Key Service           | Example Usage                    |
+| -------------- | ------------------------------- | --------------------- | -------------------------------- |
+| Authentication | Verify **who** the user is      | `AddAuthentication()` | Login, JWT token validation      |
+| Authorization  | Decide **what** user can access | `AddAuthorization()`  | Role/Policy-based access control |
 
