@@ -194,3 +194,6 @@ public IActionResult HRPortal()
 | Authentication | Verify **who** the user is      | `AddAuthentication()` | Login, JWT token validation      |
 | Authorization  | Decide **what** user can access | `AddAuthorization()`  | Role/Policy-based access control |
 
+**9. What is minimal api in .net core?**
+
+Minimal APIs in .NET Core provide a streamlined approach to building HTTP APIs with minimal code and dependencies, ideal for microservices and scenarios requiring reduced boilerplate. They simplify API development by allowing direct route definition and action specification within the Program.cs file, eliminating the need for controllers or routing attributes.
