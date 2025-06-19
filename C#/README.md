@@ -84,4 +84,25 @@ int newNum = (int)obj;     // Unboxing
 
 In C#, var, dynamic, and object all offer ways to work with variables of unknown or varying types, but they differ significantly in how they handle type information and when that information is used. var uses type inference at compile time, dynamic uses late binding at runtime, and object represents a base type that can hold any object but requires explicit casting (boxing/unboxing) for specific operations.
 
+**VAR keyword and I listed some key points of type below:**
 
+- You need to assign a value for the var keyword while declaring variables;
+- Because its type is known at compile time and it is statically typed variable;
+- You can’t change the data type of variable when it has been declared using the keyword var.
+
+**DYNAMIC keyword:**
+
+- It can store any type of value, and its type is unknown until runtime, so it will not support IntelliSense;
+- It is not mandatory to assign a value at declaration time.
+
+**OBJECT keyword.**
+
+- It can assign or store any type of value because it is the base class for all types in C#;
+- We need to change the type an object value to a specific type before doing any manipulation on it;
+- We need to be very careful while using objects because it can cause serious problems at runtime if it can’t convert to a specific type.
+
+**Then, let’s check the difference among these three types:**
+
+1. Declaration and Initialization.Object: Assigning is not required; Var: Assigning is mandatory at the time of declaration;Dynamic: Assigning is not required.
+2. Value acceptance / storage.Object: Possible to store any kind of data type;Var: You can store any type of value, but initialization is mandatory;Dynamic: Possible to store any kind of data type.
+3. Passing as a method argument.Object: Yes, we can pass it as a method argument;Var: No;Dynamic: Like an object, we can pass it as a method argument.
