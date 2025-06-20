@@ -106,3 +106,78 @@ In C#, var, dynamic, and object all offer ways to work with variables of unknown
 1. Declaration and Initialization.Object: Assigning is not required; Var: Assigning is mandatory at the time of declaration;Dynamic: Assigning is not required.
 2. Value acceptance / storage.Object: Possible to store any kind of data type;Var: You can store any type of value, but initialization is mandatory;Dynamic: Possible to store any kind of data type.
 3. Passing as a method argument.Object: Yes, we can pass it as a method argument;Var: No;Dynamic: Like an object, we can pass it as a method argument.
+```
+class Program
+{
+    static void Main(string[] args)
+    {
+        var vName = "Hello"; //It is mandatory to assign a value at declaration time
+        Console.WriteLine(vName);
+
+        dynamic name; //It is not mandatory to assign a value at declaration time
+        name = "Biplob";
+        Console.WriteLine(name);
+        name = 1234;
+        Console.WriteLine(name);
+
+        dynamic a = 3;
+        dynamic b = 5;
+        dynamic c = a + b; //no need to convertion
+        Console.WriteLine(c);
+
+        object m;
+        m = "Biplob";
+        m = 5;
+        object n = 7;
+        object result = Convert.ToDecimal(m) + Convert.ToDecimal(n); //need to change object type to a specific type before doing any manipulation on it;
+        Console.WriteLine(result);
+    }
+}
+```
+**8. What is a delegate in C#?**
+
+In C#, a delegate is a type that represents a reference to a method. Think of it as a variable that can hold a reference to a method, allowing you to pass methods as arguments to other methods, store them for later use, or invoke them dynamically. Essentially, delegates enable you to treat methods like any other data type in your code. 
+
+**Key Points**
+
+- A delegate allows you to encapsulate a method call.
+- You can pass methods as parameters to other methods.
+- You can change the method being called at runtime.
+- Delegates are the basis for events in C#.
+```
+// Declare a delegate
+public delegate void GreetDelegate(string name);
+
+// Define a method matching the delegate signature
+public class Greeter
+{
+    // First method
+    public void SayHello(string name)
+    {
+        Console.WriteLine($"Hello, {name}!");
+    }
+
+    // Second method
+    public void SayWelcome(string name)
+    {
+        Console.WriteLine($"Welcome, {name}, to the system.");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Greeter greeter = new Greeter();
+
+        // Create delegate instance
+        GreetDelegate greet = greeter.SayHello;
+
+        // Add another method to the delegate invocation list
+        greet += greeter.SayWelcome;
+
+        // Invoke the delegate
+        greet("Biplob");
+    }
+}
+```
