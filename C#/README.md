@@ -405,3 +405,15 @@ int count = (int)table["apple"]; // Explicit casting required
 | Null Key Support | ❌ No       | ✅ Yes         |
 | Recommended      | ✅ Yes      | ❌ No (legacy) |
 
+**18. Can a constructor be private in C#?**
+
+Yes. Used in Singleton or static classes to prevent instantiation.
+```
+class Singleton
+{
+    private static Singleton _instance = new Singleton();
+    private Singleton() { }
+    public static Singleton Instance => _instance;
+}
+```
+
