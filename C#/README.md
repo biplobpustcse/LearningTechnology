@@ -181,3 +181,178 @@ class Program
     }
 }
 ```
+**8. What is the difference between readonly and const?**
+
+| Feature      | const             | readonly            |
+| ------------ | ----------------- | ------------------- |
+| Evaluated at | Compile-time      | Runtime             |
+| Modifiable   | No                | In constructor only |
+| Type         | Static by default | Instance or static  |
+
+**Example of const**
+```
+public class MathConstants
+{
+    public const double Pi = 3.14159; // must be assigned at declaration
+}
+```
+** Example of readonly**
+```
+public class Config
+{
+    public readonly string ConnectionString;
+
+    public Config(string connectionString)
+    {
+        ConnectionString = connectionString; // allowed in constructor
+    }
+}
+```
+**9. What are async and await in C#?**
+
+Used for asynchronous programming. They allow non-blocking code execution.
+```
+public async Task<string> GetDataAsync()
+{
+    HttpClient client = new HttpClient();
+    string result = await client.GetStringAsync("https://api.example.com");
+    return result;
+}
+```
+**10. What is the difference between Task and Thread?**
+
+- **Task:** High-level abstraction of asynchronous operations, managed by ThreadPool.
+<br/>Uses the ThreadPool, which reuses threads for better performance and lower overhead.
+
+- **Thread:** Low-level control, each thread has its own context.
+<br/>Creates a dedicated thread, consumes more memory (1MB stack by default).
+
+| Feature           | `Thread`                        | `Task`                               |
+| ----------------- | ------------------------------- | ------------------------------------ |
+| Abstraction       | Low                             | High                                 |
+| Thread source     | OS-managed                      | ThreadPool                           |
+| Performance       | Slower (more overhead)          | Faster (less overhead)               |
+| Async support     | ❌                               | ✅                                    |
+| Exception capture | Manual                          | Built-in                             |
+| Use case          | Long-running or thread-specific | Short, parallel, or async operations |
+
+**11. What is the using statement in C#?**
+
+A **using** statement is used to ensure the disposal of resources (like files, DB connection).
+```
+using (var reader = new StreamReader("file.txt"))
+{
+    string content = reader.ReadToEnd();
+}
+```
+**11. What is garbage collection in C#?**
+
+The Garbage Collector (GC) automatically reclaims memory occupied by objects that are no longer in use.
+
+**Why is it needed?**
+Without GC, developers would have to manually allocate and deallocate memory, which often leads to:
+
+- Memory leaks (unused objects not being cleaned up)
+- Dangling pointers (referencing freed memory)
+- Crashes and instability
+
+**12. What are value types and reference types in C#?**
+
+- **Value types:** Value types hold the actual data. When a value type is assigned to another variable, a copy of the data is made. They are stored in the stack memory
+  
+**Common Value Types:**
+- int
+- float
+- double
+- char
+- bool
+- struct
+- enum
+- decimal
+- DateTime
+  **Example:**
+```
+int x = 10;
+int y = x;
+y = 20;
+
+Console.WriteLine(x); // Output: 10 (not affected by y)
+```
+- **Reference types:** Reference types store a reference (pointer) to the actual data, not the data itself. They are stored in the heap, and the reference is stored in the stack.
+
+🔑 **Common Reference Types:**
+- class
+- interface
+- delegate
+- array
+- string
+- object (base type for all types)
+**Example:**
+```
+  class Person {
+    public string Name;
+}
+
+Person p1 = new Person();
+p1.Name = "Biplob";
+
+Person p2 = p1;
+p2.Name = "Hosen";
+
+Console.WriteLine(p1.Name); // Output: Hosen
+```
+**13. What is a Memory Leak in C#?**
+
+A memory leak in C# happens when your application holds references to objects that are no longer needed, preventing the garbage collector (GC) from freeing that memory. Over time, this can lead to increased memory usage, performance degradation, or even OutOfMemoryException.
+
+**Common Causes of Memory Leaks in C#**
+| Cause                                       | Example                                                                                  |
+| ------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| ❌ **Event Handlers Not Unsubscribed**       | Subscribing to events and never unsubscribing.                                           |
+| ❌ **Static Collections**                    | Storing objects in static lists or dictionaries.                                         |
+| ❌ **Long-lived Objects Holding References** | Singleton or long-running services holding references to short-lived objects.            |
+| ❌ **Unmanaged Resources Not Disposed**      | Failing to call `Dispose()` on `IDisposable` objects like `SqlConnection`, `FileStream`. |
+
+**Example of a Memory Leak (Event Handler):**
+```
+public class Publisher
+{
+    public event EventHandler MyEvent;
+}
+
+public class Subscriber
+{
+    public Subscriber(Publisher publisher)
+    {
+        publisher.MyEvent += HandleEvent;
+    }
+
+    private void HandleEvent(object sender, EventArgs e)
+    {
+        // do something
+    }
+}
+```
+**How to Prevent Memory Leaks**
+
+✅ Use using statements or explicitly call Dispose() for IDisposable objects.
+
+✅ Unsubscribe from events (event -= handler) when done.
+
+✅ Avoid unnecessary use of static references.
+
+✅ Use WeakReference if necessary.
+
+✅ Monitor memory usage using tools like:
+- Visual Studio Diagnostic Tools
+
+**14. What is a static constructor in C#?**
+
+It’s used to initialize static data or perform actions that need to run only once.
+```
+class Logger
+{
+    static Logger() { /* Initialize once */ }
+}
+```
+
