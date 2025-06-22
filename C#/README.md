@@ -355,4 +355,53 @@ class Logger
     static Logger() { /* Initialize once */ }
 }
 ```
+**15. What is the yield keyword in C#?**
+
+Used in an iterator method to return values one at a time, enabling lazy evaluation.
+```
+public IEnumerable<int> GetEven()
+{
+    for (int i = 0; i < 10; i += 2)
+        yield return i;
+}
+```
+**16. Difference between Task, Task<T>, and ValueTask<T>?**
+
+**Task:** For async operations with no result.
+
+**Task<T>:** Async with a result.
+
+**ValueTask<T>:** Performance optimization; avoids heap allocation if result is available synchronously.
+
+**17. What is the difference between Dictionary and Hashtable?**
+
+In C#, both Dictionary<TKey, TValue> and Hashtable are used to store key-value pairs, but there are key differences between them in terms of type safety, performance, and usage in modern .NET. Here's a detailed comparison:
+
+Dictionary<TKey, TValue> is type-safe and generic.
+
+Hashtable<TKey, TValue> is non-generic and stores objects.
+
+Dictionary is faster due to type safety and avoids boxing/unboxing.
+
+**Code Examples**
+
+Dictionary Example:
+```
+var dict = new Dictionary<string, int>();
+dict["apple"] = 5;
+int count = dict["apple"]; // No casting needed
+```
+Hashtable Example:
+```
+Hashtable table = new Hashtable();
+table["apple"] = 5;
+int count = (int)table["apple"]; // Explicit casting required
+```
+| Feature          | Dictionary | Hashtable     |
+| ---------------- | ---------- | ------------- |
+| Generics         | ✅ Yes      | ❌ No          |
+| Type Safety      | ✅ Yes      | ❌ No          |
+| Performance      | ✅ Faster   | ❌ Slower      |
+| Null Key Support | ❌ No       | ✅ Yes         |
+| Recommended      | ✅ Yes      | ❌ No (legacy) |
 
