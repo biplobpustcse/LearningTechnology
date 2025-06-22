@@ -50,13 +50,13 @@ GetSum(out sum, 3, 4);
 Console.WriteLine(sum);  // Output: 7
 ```
 
-**5. What is the difference between Array and ArrayList?**
+**3. What is the difference between Array and ArrayList?**
 
 Array: Strongly typed, fixed size.
 
 ArrayList: Stores objects, not type-safe, resizable.
 
-**6. What is the difference between abstract class and interface?**
+**4. What is the difference between abstract class and interface?**
 
 **Key Differences Between Abstract Class and Interface**
 
@@ -71,16 +71,16 @@ In C#, abstract classes and interfaces are both used to define contracts that ot
 | Constructors     | Yes                                  | No                                                       |
 | Abstraction      | doesn't provide full abstraction     | provide full abstraction                                 |
 
-**7. What is boxing and unboxing in C#?**
+**5. What is boxing and unboxing in C#?**
 
-- Boxing: Converting a value type to object.
-- Unboxing: Extracting the value type from object.
+- Boxing: Converting a value type to an object.
+- Unboxing: Extracting the value type from the object.
 ```
 int num = 123;
 object obj = num;          // Boxing
 int newNum = (int)obj;     // Unboxing
 ```
-**7. Difference between var vs dynamic and object in c#**
+**6. Difference between var vs dynamic and object in c#**
 
 In C#, var, dynamic, and object all offer ways to work with variables of unknown or varying types, but they differ significantly in how they handle type information and when that information is used. var uses type inference at compile time, dynamic uses late binding at runtime, and object represents a base type that can hold any object but requires explicit casting (boxing/unboxing) for specific operations.
 
@@ -134,7 +134,7 @@ class Program
     }
 }
 ```
-**8. What is a delegate in C#?**
+**7. What is a delegate in C#?**
 
 In C#, a delegate is a type that represents a reference to a method. Think of it as a variable that can hold a reference to a method, allowing you to pass methods as arguments to other methods, store them for later use, or invoke them dynamically. Essentially, delegates enable you to treat methods like any other data type in your code. 
 
