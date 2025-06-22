@@ -416,4 +416,70 @@ class Singleton
     public static Singleton Instance => _instance;
 }
 ```
+**What is property vs field in C#?**
+
+**Field:**
+
+A field is a data member of a class that directly stores a value. Fields are often declared with private or protected access modifiers to encapsulate the data and provide controlled access to it within the class. They are typically used for storing the internal state of an object.
+
+**Key Characteristics of Fields**
+- Fields store data directly.
+- They are often declared with private or protected access modifiers.
+- Fields are accessed without any additional logic or behavior.
+- They are typically used for encapsulating the internal state of an object.
+```
+public class Person
+{
+    private string name; // This is the underlying field
+
+    // Property to access the name field
+    public string Name
+    {
+        get { return name; } // Getter
+        set { name = value; } // Setter
+    }
+
+    // Constructor
+    public Person(string name)
+    {
+        Name = name; // Using the property to set the value
+    }
+
+    // Other methods...
+}
+```
+**Properties:**
+Properties, on the other hand, provide controlled access to these fields, enabling encapsulation and the ability to include validation or other logic within the getter and setter methods.
+
+**Key Characteristics of Properties**
+- Properties provide controlled access to fields.
+- They use getter and setter methods to define access logic.
+- You can add additional logic, such as validation, in getters and setters.
+- Properties are used to expose the internal state of an object while encapsulating it.
+```
+public class Person
+{
+    private string name; // This is the underlying field
+
+    // Property to access the name field
+    public string Name
+    {
+        get { return name; } // Getter
+        set { name = value; } // Setter
+    }
+
+    // Constructor
+    public Person(string name)
+    {
+        Name = name; // Using the property to set the value
+    }
+
+    // Other methods...
+}
+```
+**When to Use Fields vs. Properties**
+
+- Fields are suitable when you need a simple data storage mechanism within a class without any additional logic. They are often used for private or protected fields that should not be directly exposed outside the class.
+- Properties are more versatile and should be used when you need to expose fields while controlling access or adding logic. You can use properties to enforce data validation rules, compute values dynamically, or implement change tracking.
+
 
