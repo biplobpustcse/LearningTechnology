@@ -182,6 +182,199 @@ void ProcessPurchase(Product product, int qty)
     product.ProcessOrder(qty); // Safe for both physical and digital
 }
 ```
+**🔹 4. Interface Segregation Principle (ISP)** How does Interface Segregation Principle improve code design?
+
+Clients should not be forced to depend on interfaces they don’t use. It's better to have multiple small interfaces than one large one.
+
+**Let's say you have different types of products in your inventory:**
+
+- **Physical Products** (require shipping and stock tracking)
+- **Digital Products** (require download link delivery)
+- **Subscription Products** (require activation only)
+
+**❌ Violation of ISP (Fat Interface)**
+```
+public interface IProduct
+{
+    void Ship();
+    void GenerateDownloadLink();
+    void ActivateSubscription();
+}
+```
+**❌ Problem:**
+
+Each class must implement all methods, even if they are not applicable.
+```
+public class PhysicalProduct : IProduct
+{
+    public void Ship() => Console.WriteLine("Shipping item...");
+    public void GenerateDownloadLink() => throw new NotImplementedException();
+    public void ActivateSubscription() => throw new NotImplementedException();
+}
+
+public class DigitalProduct : IProduct
+{
+    public void Ship() => throw new NotImplementedException();
+    public void GenerateDownloadLink() => Console.WriteLine("Sending download link...");
+    public void ActivateSubscription() => throw new NotImplementedException();
+}
+
+public class SubscriptionProduct : IProduct
+{
+    public void Ship() => throw new NotImplementedException();
+    public void GenerateDownloadLink() => throw new NotImplementedException();
+    public void ActivateSubscription() => Console.WriteLine("Subscription activated.");
+}
+```
+- 👎 Breaks ISP: Clients are forced to depend on methods they don’t use.
+**✅ Correct Design Using ISP**
+
+ **Split the IProduct interface into smaller, role-specific interfaces:**
+ ```
+public interface IShippable
+{
+    void Ship();
+}
+
+public interface IDownloadable
+{
+    void GenerateDownloadLink();
+}
+
+public interface ISubscribable
+{
+    void ActivateSubscription();
+}
+```
+**🧑‍💻 Concrete Classes:**
+```
+public class PhysicalProduct : IShippable
+{
+    public void Ship() => Console.WriteLine("Shipping physical product...");
+}
+
+public class DigitalProduct : IDownloadable
+{
+    public void GenerateDownloadLink() => Console.WriteLine("Emailing download link...");
+}
+
+public class SubscriptionProduct : ISubscribable
+{
+    public void ActivateSubscription() => Console.WriteLine("Activating subscription...");
+}
+```
+**✅ Client Code (example usage):**
+```
+public class OrderProcessor
+{
+    public void ProcessShipping(IShippable product)
+    {
+        product.Ship();
+    }
+
+    public void ProcessDownload(IDownloadable product)
+    {
+        product.GenerateDownloadLink();
+    }
+
+    public void ProcessSubscription(ISubscribable product)
+    {
+        product.ActivateSubscription();
+    }
+}
+```
+**🔹 5. Dependency Inversion Principle (DIP)** What is the Dependency Inversion Principle in C#? How does it relate to Dependency Injection?
+
+- High-level modules should not depend on low-level modules; both should depend on **abstractions**.
+- Also: Abstractions should not depend on details. Details should depend on abstractions.
+
+**💡 Real-Life Analogy:**
+
+You use a **remote** to operate the TV. You don’t need to know how the internal circuit works.
+
+**Scenario: Order Placement with Notification**
+
+- When an order is placed, a **notification** (email or SMS) is sent.
+- The high-level `OrderService` shouldn’t depend on low-level implementations like `EmailNotifier` or `SmsNotifier`.
+
+**❌ Violation of DIP (High-level depending on low-level)**
+```
+public class EmailNotifier
+{
+    public void Send(string message)
+    {
+        Console.WriteLine($"Email sent: {message}");
+    }
+}
+
+public class OrderService
+{
+    private readonly EmailNotifier _notifier;
+
+    public OrderService()
+    {
+        _notifier = new EmailNotifier(); // Tight coupling to EmailNotifier
+    }
+
+    public void PlaceOrder(string product)
+    {
+        Console.WriteLine($"Order placed for: {product}");
+        _notifier.Send($"Your order for {product} has been placed.");
+    }
+}
+```
+- 👎 OrderService depends directly on EmailNotifier, violating DIP. You can't easily switch to SMS, push notifications, etc.
+
+**✅ Correct Design Using DIP**
+```
+public interface INotifier
+{
+    void Send(string message);
+}
+
+public class EmailNotifier : INotifier
+{
+    public void Send(string message)
+    {
+        Console.WriteLine($"[EMAIL] {message}");
+    }
+}
+
+public class SmsNotifier : INotifier
+{
+    public void Send(string message)
+    {
+        Console.WriteLine($"[SMS] {message}");
+    }
+}
+
+//Refactor OrderService to depend on the abstraction:
+
+public class OrderService
+{
+    private readonly INotifier _notifier;
+
+    public OrderService(INotifier notifier)
+    {
+        _notifier = notifier;
+    }
+
+    public void PlaceOrder(string product)
+    {
+        Console.WriteLine($"Order placed for: {product}");
+        _notifier.Send($"Your order for {product} has been placed.");
+    }
+}
+
+```
+**💡 Key Takeaways (DIP):**
+
+| Layer      | Depends On                                              |
+| ---------- | ------------------------------------------------------- |
+| High-level | `INotifier` interface                                   |
+| Low-level  | `EmailNotifier`, `SmsNotifier`                          |
+| Inversion  | Achieved by injecting abstraction into high-level class |
+
 
 
 
