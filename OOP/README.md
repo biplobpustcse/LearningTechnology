@@ -1,9 +1,14 @@
 ## Questions and answers
-**1. Object-Oriented Programming (OOP)**
+**1. What is the difference between Class and Object?**
+
+- **Class:** A blueprint or template to create objects.
+- **Object:** An instance of a class that contains actual values.
+
+**2. Object-Oriented Programming (OOP)**
 
 Object-Oriented Programming (OOP) is a programming paradigm that uses objects to model real-world entities. It promotes code reusability, scalability, and maintainability.
 
-**2. What are the four pillars/Core Principles of OOP?**
+**3. What are the four pillars/Core Principles of OOP?**
 
 **OOP in C# is built on four key principles:**
 
@@ -130,8 +135,13 @@ class Program
     }
 }
 ```
-- Virtual method in base class allows overriding.
-- Derived class provides its own implementation.
+**What is the difference between Method Overloading and Method Overriding?**
+| Feature     | Method Overloading                     | Method Overriding                               |
+| ----------- | -------------------------------------- | ----------------------------------------------- |
+| Definition  | Same method name, different parameters | Same method signature, different implementation |
+| Type        | Compile-time polymorphism              | Run-time polymorphism                           |
+| Inheritance | Not required                           | Requires inheritance                            |
+| Keyword     | N/A                                    | Uses `virtual` and `override`                   |
 
 **iv. Abstraction**
 
@@ -192,7 +202,7 @@ class Program
 }
 ```
 
-**3. Interfaces vs Abstract Class**
+**4. Interfaces vs Abstract Class**
 
 | Feature                   | Abstract Class            | Interface                                   |
 | ----------------          | ------------------------- | ----------------------------------------    |
@@ -213,7 +223,7 @@ class Program
 
 - **Abstract classes** are about **code reuse and inheritance**, while **interfaces** are about defining **contracts and achieving polymorphism**. 
 
-**4. Partial Classes**
+**5. Partial Classes**
 
 Splitting a class into multiple files.
 ```
@@ -227,6 +237,98 @@ partial class MyClass
     public void Method2() => Console.WriteLine("Method2");
 }
 ```
+**6. What is a sealed class in C#?**
+
+A sealed class cannot be inherited.
+```
+public sealed class Logger
+{
+    public void Log(string message) => Console.WriteLine(message);
+}
+```
+**7. What is the difference between virtual, override, and new keywords?**
+
+| Keyword    | Purpose                                               |
+| ---------- | ----------------------------------------------------- |
+| `virtual`  | Used in base class to allow a method to be overridden |
+| `override` | Used in derived class to override a `virtual` method  |
+| `new`      | Hides a method in base class (not polymorphic)        |
+
+When a derived class defines a member **with the same name** as a member in the base class, you can use the **new** keyword to **explicitly hide** the base class member. This is not the same as overriding (which is polymorphic).
+```
+public class Animal
+{
+    public void Speak()
+    {
+        Console.WriteLine("Animal speaks");
+    }
+}
+
+public class Dog : Animal
+{
+    public new void Speak()
+    {
+        Console.WriteLine("Dog barks");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Animal a = new Dog();
+        a.Speak(); // Output: "Animal speaks" ❌ Not polymorphic!
+
+        Dog d = new Dog();
+        d.Speak(); // Output: "Dog barks" ✅
+    }
+}
+```
+**8. What is Constructor Overloading?**
+
+Defining multiple constructors with different parameters.
+```
+public class Student
+{
+    public Student() {}
+    public Student(string name) {}
+    public Student(string name, int age) {}
+}
+```
+**9. What is the purpose of the base keyword?**
+
+Used to call the base class constructor or methods.
+```
+public class Parent
+{
+    public Parent(string name) {}
+}
+
+public class Child : Parent
+{
+    public Child(string name) : base(name) {}
+}
+```
+**10. What is a static class?**
+
+A static class cannot be instantiated and can contain only static members.
+```
+public static class MathHelper
+{
+    public static int Add(int a, int b) => a + b;
+}
+```
+**11. What is the difference between is and as in C#?**
+
+**is checks object type:**
+```
+if(obj is string) { ... }
+```
+**as performs safe casting:**
+```
+string str = obj as string;
+```
+
 
 
   
