@@ -66,3 +66,19 @@ UDP, is a communication protocol that prioritizes speed and efficiency over reli
 
 While TCP is connection-oriented and reliable, UDP (User Datagram Protocol) is connectionless and faster but less reliable. UDP is often preferred for applications where speed is critical and some data loss is acceptable, like streaming or online gaming. 
 
+**SSL (Secure Sockets Layer)**
+
+SSL (Secure Sockets Layer) is a security protocol that creates an encrypted link between a web server and a browser, ensuring secure transmission of data between the two. It's commonly used to protect sensitive information like usernames, passwords, and credit card details transmitted online. 
+
+**TLS (Transport Layer Security)**
+
+TLS, or Transport Layer Security, is a cryptographic protocol that provides secure communication over a network, primarily used to encrypt internet traffic like web browsing, email, and messaging.
+
+**HTTPS:**
+
+Websites using SSL/TLS have "HTTPS" in their URL, instead of "HTTP," indicating a secure connection. 
+
+**SSL vs. TLS:**
+
+While "SSL" is commonly used, TLS is the current, upgraded version of the protocol. 
+
