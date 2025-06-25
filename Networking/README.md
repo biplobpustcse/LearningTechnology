@@ -6,7 +6,7 @@ Networking না বুঝলে Backend Developer-রা আধা-অন্�
 
 🛜 1. DNS (ইন্টারনেটের ফোনবুক)
 আপনি যখন ব্রাউজার কোনো কিছু লিখে সার্চ করেন যেমন google.com বা mehediblog.com টাইপ করলেই Server খুঁজে পায় না।
-প্রথমে DNS কে জিজ্ঞেস করা হয়:
+প্রথমে DNS (Domain Name System) কে জিজ্ঞেস করা হয়:
 “এই ওয়েবসাইটের আসল ঠিকানা (IP Address) কি?”
 উত্তর আসে: 142.250.190.78
 এখন কম্পিউটার জানে কোথায় যেতে হবে।
@@ -54,3 +54,15 @@ Browser → DNS → Server IP → TCP Handshake → SSL/TLS → HTTP Request →
 ✔ Backend Architect বুঝা সহজ
 
 [Reference:](https://www.linkedin.com/posts/lutful-mehedi_backenddevelopment-networking-banglatech-activity-7343232590411153409-BTfB?utm_source=share&utm_medium=member_desktop&rcm=ACoAABxURCsBhbj_Yo9DwdntB5c06C8bErOYSVg)
+
+**TCP (Transmission Control Protocol)**
+
+TCP, is a fundamental protocol within the TCP/IP suite, **ensuring reliable** and **ordered delivery** of data between applications and devices. It establishes a connection, breaks data into packets, numbers them for order, and manages retransmissions if packets are lost or corrupted. This makes TCP crucial for applications where data integrity is paramount, such as web browsing, email, and file transfer.
+
+**UDP (User Datagram Protocol)**
+UDP, is a communication protocol that prioritizes speed and efficiency over reliability. It's a connectionless protocol, meaning it doesn't require a prior connection to be established between sender and receiver before transmitting data. This makes it suitable for applications where speed is crucial, even if some data loss is acceptable. 
+
+**TCP vs. UDP:**
+
+While TCP is connection-oriented and reliable, UDP (User Datagram Protocol) is connectionless and faster but less reliable. UDP is often preferred for applications where speed is critical and some data loss is acceptable, like streaming or online gaming. 
+
