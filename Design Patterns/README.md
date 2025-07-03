@@ -1,9 +1,21 @@
 ## Questions and answers
 
+**What is a design pattern?**
+
+A design pattern is a general, reusable solution to a commonly occurring problem within a given context in software design. Patterns are templates—not code—that can be adapted to solve specific design issues in object-oriented systems.
+
+**🔹 Creational Design Patterns**
+
 **✅ 1. Singleton Pattern**
 Ensures a class has only one instance and provides a global point of access to it.
 
-**Use Case:** Centralized logging system.
+**📦 Structure:**
+
+- Private constructor
+- Private static variable of the same class
+- Public static method/property to get the instance
+- 
+**Real-World Example:** Logger, Configuration Manager, or DB Connection Pool.
 
 ```
 public sealed class Logger {
@@ -21,7 +33,16 @@ Logger.Instance.Log("Application started.");
 
 Provides an interface for creating objects but lets subclasses alter the type of created objects.
 
-**Use Case:** Creating different types of notifications (Email, SMS).
+- You want to create objects without exposing the instantiation logic.
+- The type of object is determined by a condition or input.
+
+**📦 Structure:**
+
+- Interface or abstract base class
+- Multiple implementations
+- Factory class with a method to create instances
+
+**Real-World Example:** Creating different types of notifications (Email, SMS).
 
 ```
 public interface INotification {
@@ -52,7 +73,13 @@ notification.Send("Hello from Factory!");
 
 **✅ 3. Builder Pattern**
 
-Separates construction of a complex object from its representation.
+Constructs complex objects step by step, separating the construction from its representation.
+
+**📦 Structure:**
+
+- Builder interface
+- Concrete builder classes
+- Director class (optional)
 
 **Use Case:** Creating a user profile with optional fields.
 
@@ -84,6 +111,12 @@ var user = new UserProfileBuilder()
 
 Allows incompatible interfaces to work together.
 
+**📦 Structure:**
+
+- Target interface
+- Existing class
+- Adapter class to bridge them
+
 **Use Case:** Integrating old payment system with a new one.
 
 ```
@@ -107,6 +140,12 @@ payment.Pay(1500);
 
 **✅ 5. Decorator Pattern**
 Adds new behavior to objects dynamically without altering their structure.
+
+**📦 Structure:**
+
+- Base component interface
+- Concrete component
+- Decorator implementing the same interface
 
 **Use Case:** Add logging to a user service.
 
@@ -136,7 +175,16 @@ service.CreateUser("Biplob");
 
 **✅ 6. Observer Pattern**
 
-Allows objects to be notified when another object's state changes.
+The Observer pattern defines a one-to-many dependency. When one object changes state, all its dependents are notified.
+
+**📦 Structure:**
+
+- Subject (Publisher)
+- Observers (Subscribers)
+
+**✅ Real-World Example:**
+
+News app notifications, event handling in GUI, stock market updates.
 
 **Use Case:** Automatically updating UI or logs when a product price changes.
 
@@ -162,32 +210,97 @@ product.Price = 250.50m;
 
 **✅ 7. Strategy Pattern**
 
-Encapsulates algorithms and makes them interchangeable.
+Strategy pattern allows you to define a family of algorithms, put them in separate classes, and make them interchangeable.
 
-**Use Case:** Switch sorting strategy dynamically.
+**📦 Structure:**
+
+- Strategy interface
+- Concrete strategy implementations
+- Context class that uses the strategy
+
+**Use Case:** You're building an eCommerce checkout system. Users can pay using Credit Card, PayPal, or Bkash. You want to allow the app to easily switch payment strategies without modifying the OrderService.
 
 ```
-public interface ISortStrategy {
-    void Sort(List<int> list);
+public interface IPaymentStrategy
+{
+    void ProcessPayment(decimal amount);
 }
 
-public class BubbleSort : ISortStrategy {
-    public void Sort(List<int> list) => Console.WriteLine("Sorting with BubbleSort");
+public class CreditCardPayment : IPaymentStrategy
+{
+    public void ProcessPayment(decimal amount)
+    {
+        // Simulate processing credit card payment
+        Console.WriteLine($"Paid {amount:C} using Credit Card.");
+    }
 }
 
-public class QuickSort : ISortStrategy {
-    public void Sort(List<int> list) => Console.WriteLine("Sorting with QuickSort");
+public class PayPalPayment : IPaymentStrategy
+{
+    public void ProcessPayment(decimal amount)
+    {
+        // Simulate PayPal API call
+        Console.WriteLine($"Paid {amount:C} using PayPal.");
+    }
 }
 
-public class Sorter {
-    private readonly ISortStrategy _strategy;
-    public Sorter(ISortStrategy strategy) => _strategy = strategy;
-    public void Sort(List<int> data) => _strategy.Sort(data);
+public class BkashPayment : IPaymentStrategy
+{
+    public void ProcessPayment(decimal amount)
+    {
+        // Simulate Bkash transaction
+        Console.WriteLine($"Paid {amount:C} using Bkash.");
+    }
+}
+
+
+public class OrderService
+{
+    private IPaymentStrategy _paymentStrategy;
+
+    public void SetPaymentStrategy(IPaymentStrategy paymentStrategy)
+    {
+        _paymentStrategy = paymentStrategy;
+    }
+
+    public void Checkout(decimal totalAmount)
+    {
+        if (_paymentStrategy == null)
+        {
+            throw new InvalidOperationException("Payment strategy not selected.");
+        }
+
+        // Simulate order finalization
+        Console.WriteLine("Order placed successfully.");
+
+        // Delegate payment to the chosen strategy
+        _paymentStrategy.ProcessPayment(totalAmount);
+    }
 }
 
 // Usage
-var sorter = new Sorter(new QuickSort());
-sorter.Sort(new List<int> { 1, 3, 2 });
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        var orderService = new OrderService();
+
+        // Simulate payment selection from user
+        string selectedPayment = "bkash"; // Or "creditcard", "paypal"
+        decimal orderTotal = 2000;
+
+        IPaymentStrategy strategy = selectedPayment.ToLower() switch
+        {
+            "creditcard" => new CreditCardPayment(),
+            "paypal" => new PayPalPayment(),
+            "bkash" => new BkashPayment(),
+            _ => throw new Exception("Invalid payment method")
+        };
+
+        orderService.SetPaymentStrategy(strategy);
+        orderService.Checkout(orderTotal);
+    }
+}
 ```
 
 **✅ 8. Command Pattern**
@@ -228,7 +341,31 @@ command.Undo();
 Console.WriteLine(editor.Text); // (empty)
 ```
 
+**9. Repository Pattern**
 
+**✅ Purpose:**
+
+Abstracts data access logic and centralizes it into a repository class.
+
+**✅ Real-World Use:**
+
+Used heavily in ASP.NET Core with Entity Framework.
+```
+public interface IProductRepository
+{
+    Product Get(int id);
+    void Add(Product product);
+}
+
+public class ProductRepository : IProductRepository
+{
+    private readonly AppDbContext _context;
+    public ProductRepository(AppDbContext context) => _context = context;
+
+    public Product Get(int id) => _context.Products.Find(id);
+    public void Add(Product product) => _context.Products.Add(product);
+}
+```
 
 
   
