@@ -107,6 +107,8 @@ var user = new UserProfileBuilder()
     .Build();
 ```
 
+#### ✅ Structural Patterns
+
 **✅ 4. Adapter Pattern**
 
 Allows incompatible interfaces to work together.
@@ -172,6 +174,7 @@ public class LoggingUserService : IUserService {
 IUserService service = new LoggingUserService(new UserService());
 service.CreateUser("Biplob");
 ```
+#### ✅ Behavioral Patterns
 
 **✅ 6. Observer Pattern**
 
@@ -208,7 +211,93 @@ product.PriceChanged += () => Console.WriteLine("Price has been updated!");
 product.Price = 250.50m;
 ```
 
-**✅ 7. Strategy Pattern**
+**✅ 7. Mediator Pattern**
+
+It reduces the chaos of direct communication between multiple objects by introducing a mediator object. The mediator handles the communication and encapsulates how these objects interact.
+
+✅ Real-World Example:
+Air Traffic Control (ATC):
+Planes (components) don’t communicate with each other directly. Instead, ATC (mediator) coordinates all communication.
+
+**📦 Simple Real-World C# Example – Chatroom System**
+```
+//Step 1: Define Mediator Interface
+public interface IChatMediator
+{
+    void SendMessage(string message, User sender);
+    void RegisterUser(User user);
+}
+
+//Step 2: Concrete Mediator
+public class ChatRoom : IChatMediator
+{
+    private readonly List<User> _users = new();
+
+    public void RegisterUser(User user)
+    {
+        _users.Add(user);
+    }
+
+    public void SendMessage(string message, User sender)
+    {
+        foreach (var user in _users)
+        {
+            if (user != sender)
+            {
+                user.Receive(message);
+            }
+        }
+    }
+}
+
+//Step 3: Colleague Class (User)
+public class User
+{
+    public string Name { get; }
+    private readonly IChatMediator _mediator;
+
+    public User(string name, IChatMediator mediator)
+    {
+        Name = name;
+        _mediator = mediator;
+        _mediator.RegisterUser(this);
+    }
+
+    public void Send(string message)
+    {
+        Console.WriteLine($"{Name} sends: {message}");
+        _mediator.SendMessage(message, this);
+    }
+
+    public void Receive(string message)
+    {
+        Console.WriteLine($"{Name} received: {message}");
+    }
+}
+
+//Step 4: Use It
+public class Program
+{
+    public static void Main()
+    {
+        var chatRoom = new ChatRoom();
+
+        var alice = new User("Alice", chatRoom);
+        var bob = new User("Bob", chatRoom);
+        var carol = new User("Carol", chatRoom);
+
+        alice.Send("Hello everyone!");
+        bob.Send("Hi Alice!");
+    }
+}
+```
+**🧰 ASP.NET Core Use Case — Using MediatR Library**
+
+MediatR is a popular .NET library that implements the Mediator Pattern and is widely used in CQRS, Clean Architecture, and Microservices.
+
+
+
+**✅ 8. Strategy Pattern**
 
 Strategy pattern allows you to define a family of algorithms, put them in separate classes, and make them interchangeable.
 
@@ -302,8 +391,13 @@ public class Program
     }
 }
 ```
+**✅ Benefits of Strategy Pattern Here**
 
-**✅ 8. Command Pattern**
+- Easy to add new payment methods.
+- Promotes Open/Closed Principle – no changes in OrderService.
+- Decouples business logic from payment details.
+
+**✅ 9. Command Pattern**
 
 Encapsulates a request as an object, allowing undo/redo functionality.
 
@@ -341,7 +435,7 @@ command.Undo();
 Console.WriteLine(editor.Text); // (empty)
 ```
 
-**9. Repository Pattern**
+**10. Repository Pattern**
 
 **✅ Purpose:**
 
