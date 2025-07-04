@@ -1,8 +1,21 @@
 ## Questions and answers
 
-**What is a design pattern?**
+**Q: What is a design pattern? Can you describe it in detail?**
 
-A design pattern is a general, reusable solution to a commonly occurring problem within a given context in software design. Patterns are templates—not code—that can be adapted to solve specific design issues in object-oriented systems.
+**Answer: A design pattern is a reusable, proven solution to a common problem in software design. It’s not code itself but rather a general blueprint that can be adapted to fit specific situations in object-oriented or architectural designs.**
+
+**Design patterns help make code more maintainable, testable, and scalable by promoting best practices and reducing code duplication.**
+
+The concept was popularized by the **Gang of Four (GoF)** in their 1994 book, where they introduced 23 foundational patterns, grouped into three categories: **Creational, Structural, and Behavioral.** These cover patterns like **Singleton, Factory, Observer, and Strategy,** which are still heavily used today.
+
+However, in modern software development — especially in enterprise and web-based applications — we also use many **non-GoF** design patterns like **Repository, Unit of Work, MVC, CQRS, and Dependency Injection.** These evolved to solve new architectural challenges like separation of concerns, testability, and domain-driven design.
+
+So, while GoF patterns are essential building blocks, real-world systems often combine both GoF and non-GoF patterns to achieve clean and scalable architecture.
+
+**💬 Optional Follow-Up: Can you give examples of patterns you've used in projects?**
+
+Sure. I've used the **Repository and Unit of Work** patterns for data access in ASP.NET Core to maintain a clean separation between the domain and persistence layers. I also use **Strategy** to allow switching between different discount calculation methods and **Mediator (via MediatR)** to decouple service logic from controllers using the **CQRS pattern.**
+
 
 **🔹 Creational Design Patterns**
 
