@@ -16,6 +16,11 @@ So, while GoF patterns are essential building blocks, real-world systems often c
 
 Sure. I've used the **Repository and Unit of Work** patterns for data access in ASP.NET Core to maintain a clean separation between the domain and persistence layers. I also use **Strategy** to allow switching between different discount calculation methods and **Mediator (via MediatR)** to decouple service logic from controllers using the **CQRS pattern.**
 
+### GoF Design Patterns (Gang of Four)
+
+Published in the book “Design Patterns: Elements of Reusable Object-Oriented Software” (1994) by Erich Gamma, Richard Helm, Ralph Johnson, and John Vlissides.
+
+They classified 23 design patterns into three categories:
 
 **🔹 Creational Design Patterns**
 
@@ -447,6 +452,19 @@ Console.WriteLine(editor.Text); // Hello
 command.Undo();
 Console.WriteLine(editor.Text); // (empty)
 ```
+### 🌐 2. Non-GoF Design Patterns
+
+These patterns are not part of the original GoF catalog but have emerged over time, especially with modern frameworks, enterprise systems, and architectural patterns like DDD and microservices.
+
+**🔍 Real-World Examples of Non-GoF Patterns That Are Widely Accepted**
+
+| Pattern                  | Where It's Used                            |
+| ------------------------ | ------------------------------------------ |
+| **Repository**           | ASP.NET Core, DDD, Clean Architecture      |
+| **Unit of Work**         | Entity Framework, NHibernate               |
+| **CQRS**                 | Microservices, Event-driven architectures  |
+| **MVC/MVVM**             | ASP.NET Core MVC, WPF, Angular             |
+| **Dependency Injection** | .NET Core, Spring, NestJS, Unity Container |
 
 **10. Repository Pattern**
 
@@ -473,6 +491,42 @@ public class ProductRepository : IProductRepository
     public void Add(Product product) => _context.Products.Add(product);
 }
 ```
+**12. CQRS Pattern**
+
+**🔹What is CQRS?**
+
+**CQRS (Command Query Responsibility Segregation)** is a design pattern that separates read (query) and write (command) operations into different models, allowing each to evolve independently for scalability, performance, and maintainability.
+
+- **Command**: Focuses on business rules and validation (rich domain model or DDD)
+- **Query**: Optimized for query performance (flat, denormalized, DTO-based)
+
+**🔹Why use CQRS?**
+
+- To decouple read and write logic
+- To optimize queries separately from commands
+- To scale read-heavy and write-heavy parts independently
+- To support event sourcing, audit logging, or event-driven architectures
+
+**🔹Have you implemented CQRS in your projects?**
+
+Yes. In a modular .NET Core accounting system, I used MediatR for CQRS where:
+
+- Commands like CreateJournalEntryCommand handled validations, business logic, and persistence.
+- Queries like GetTrialBalanceQuery returned view-optimized DTOs using raw SQL or Dapper for better performance.
+
+**🔹When should you NOT use CQRS?**
+
+- In simple CRUD systems or small apps — it adds complexity
+- When your app has minimal domain logic
+- When you're not facing scaling or performance issues
+
+**🔹What tools or libraries help implement CQRS in .NET?**
 
 
-  
+- **MediatR** – To dispatch commands and queries via a mediator
+- **FluentValidation** – For validating commands
+- **AutoMapper** – For mapping between domain and DTOs
+- **Entity Framework Core / Dapper** – For data access
+- **ASP.NET Core Minimal APIs or Controllers** – As endpoints
+
+
