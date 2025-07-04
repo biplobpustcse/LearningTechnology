@@ -529,4 +529,69 @@ Yes. In a modular .NET Core accounting system, I used MediatR for CQRS where:
 - **Entity Framework Core / Dapper** – For data access
 - **ASP.NET Core Minimal APIs or Controllers** – As endpoints
 
+**13. Unit of Work pattern**
+
+The **Unit of Work pattern** is used to **group multiple operations** (usually repository calls) under a **single database transaction**. It ensures that **either all operations succeed or all fail** — maintaining data consistency.
+
+- **Unit of Work** coordinates multiple repositories and ensures they participate in the **same transaction.**
+
+**🔹Have you implemented Unit of Work in a project?**
+
+Yes. In a multi-module .NET 8 accounting system, I used the **Unit of Work pattern** to coordinate repositories like AccountRepository and JournalEntryRepository. When creating a journal entry, both account balances and journal records had to update together — using SaveChanges() on the UoW ensured transaction safety.
+
+```
+public interface IUnitOfWork : IDisposable
+{
+    IAccountRepository Accounts { get; }
+    IJournalRepository Journals { get; }
+    Task<int> SaveChangesAsync();
+}
+
+public class UnitOfWork : IUnitOfWork
+{
+    private readonly ApplicationDbContext _context;
+
+    public UnitOfWork(ApplicationDbContext context)
+    {
+        _context = context;
+        Accounts = new AccountRepository(_context);
+        Journals = new JournalRepository(_context);
+    }
+
+    public IAccountRepository Accounts { get; }
+    public IJournalRepository Journals { get; }
+
+    public Task<int> SaveChangesAsync() => _context.SaveChangesAsync();
+
+    public void Dispose() => _context.Dispose();
+}
+
+//Using UoW in a Service Layer
+public class JournalService
+{
+    private readonly IUnitOfWork _unitOfWork;
+
+    public JournalService(IUnitOfWork unitOfWork)
+    {
+        _unitOfWork = unitOfWork;
+    }
+
+    public async Task CreateJournalAsync(JournalEntryDto dto)
+    {
+        var entry = new JournalEntry(dto);
+        await _unitOfWork.Journals.AddAsync(entry);
+        
+        // Also update related account balance
+        var account = await _unitOfWork.Accounts.GetByIdAsync(dto.AccountId);
+        account.UpdateBalance(dto.Amount);
+
+        await _unitOfWork.SaveChangesAsync();
+    }
+}
+```
+
+**🔹Is Unit of Work still needed with EF Core?**
+
+EF Core **internally implements a Unit of Work** pattern via DbContext. But when using multiple custom repositories or services, a custom UoW helps **enforce consistency** across business modules and maintain **Clean Architecture boundaries.**
+
 
