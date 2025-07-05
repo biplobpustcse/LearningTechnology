@@ -124,7 +124,106 @@ An API Gateway acts as a single entry point for all client requests in a microse
 
   ✅ **Core idea:** Organize the system so that **business rules are independent** of frameworks, UI, databases, or any external dependencies.
 
+```
+Clean Architecture Layers/
+├── Presentation/ # API, Entry point - Controllers, Swagger, Auth
+├── Application/ # DTOs, Commands, Queries, Handlers, Interfaces
+├── Domain/ # Entities (Account, JournalEntry, User)
+├── Infrastructure/ # SP, repository, services, token service
+├── Persistence/ # DbContext, migration config
+```
+**What are the main layers in Clean Architecture?**
 
+1. **Presentation Layer** – UI (Web API, MVC, Angular, etc.).
+2. **Application Layer** – Use cases and business rules (orchestrates logic).
+3. **Domain Layer** – Entities and core business logic (pure and independent).
+4. **Infrastructure Layer(also Persistence)** – Database, file system, third-party services.
 
+![Clean Architecture](https://github.com/user-attachments/assets/51940e2f-a0e9-4ec3-ab38-3139198924aa)
 
+**🎯 Key Principles**
+
+| Principle                  | Description                                                            |
+| -------------------------- | ---------------------------------------------------------------------- |
+| **Separation of Concerns** | Different responsibilities are placed in different layers              |
+| **Independence**           | Business logic does not depend on UI, DB, or frameworks                |
+| **Dependency Inversion**   | **Outer layers depend on inner layers via interfaces**                     |
+| **Testability**            | Business rules can be tested without the UI, DB, or network            |
+| **Flexibility**            | You can swap out the UI, DB, or frameworks without changing core logic |
+| ***Dependency Direction****| Always from outer to inner |
+| **Inner Layer**	           | Pure business rules (Entities, Use Cases) |
+| **Outer Layer**	           | UI, Database, Frameworks |
+
+****13. Monolith vs Modular Monolith vs Microservices****
+
+In software architecture, any modern programming language, choosing between monolithic, modular monolithic, and microservices architecture depends on various factors like project size, team structure, scalability needs, and operational maturity.
+
+🔷 1. Monolithic Architecture
+
+📌 What is it?
+
+- A single, tightly coupled application.
+- All modules (UI, business logic, data access) are part of one project and deployed together.
+
+✅ Pros:
+
+- Simple to develop and deploy (good for small teams).
+- Easy to debug and test as everything is in one place.
+- Fewer infrastructure concerns.
+
+❌ Cons:
+
+- Difficult to scale parts independently.
+- Becomes hard to maintain as it grows.
+- A single bug can potentially crash the whole system.
+
+🔷 2. Modular Monolithic Architecture
+
+📌 What is it?
+
+Still one deployable unit, but organized into well-defined internal modules or layers, often using domain-driven design (DDD) and enforcing clear boundaries.
+
+✅ Pros:
+
+- Best of both worlds (monolith + modularity).
+- Easier to maintain than a pure monolith.
+- Transition-friendly if planning to move to microservices later.
+- Enforces clean architecture, separation of concerns, and loose coupling.
+
+❌ Cons:
+
+- Still deployed as a single unit (one part failing can affect the rest).
+- Needs discipline to enforce module boundaries.
+
+🔷 3. Microservices Architecture
+
+📌 What is it?
+
+- Application is split into independently deployable services, each handling a specific business capability.
+- Services communicate over HTTP, gRPC, or messaging (e.g., RabbitMQ, Azure Service Bus).
+
+✅ Pros:
+
+- Independent scaling, development, deployment.
+- Better fault isolation.
+- Ideal for large, distributed teams.
+
+❌ Cons:
+
+- Complex to implement and manage.
+- Requires DevOps maturity (monitoring, logging, service discovery, etc.).
+- Distributed transactions are hard.
+- Potential overkill for small to mid-sized applications.
+
+🔍 **Which is Better?**
+
+There is no "one-size-fits-all." But for most modern applications, modular monolithic is often the best starting point.
+
+✅ Current Trend:
+
+- ✅ Modular Monolithic is increasingly popular for most enterprise applications, especially with ASP.NET Core + Clean Architecture.
+- ✅ Microservices are heavily used in cloud-native applications (e.g., Azure, AWS), especially in large organizations.
+- ❌ Pure Monoliths are declining in popularity for new projects but still exist in legacy systems.
+
+![image](https://github.com/user-attachments/assets/b72dadad-df7e-41d1-b869-9b83798c5627)
 
