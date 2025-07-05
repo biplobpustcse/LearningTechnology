@@ -82,5 +82,49 @@ An API Gateway acts as a single entry point for all client requests in a microse
 - **Cloud**: Azure, AWS, GCP
 - **Design**: Draw.io, Lucidchart
 
+**10. 🧱 N-Layered Architecture (Logical Separation)**
+
+- Refers to the **logical separation** of concerns within code.
+- Code is organized into **layers**, each with a specific responsibility:
+
+  - Presentation Layer (UI)
+  - Business Logic Layer (BLL)
+  - Data Access Layer (DAL)
+  - Database (SQL/NoSQL)
+    
+🎯 Focus: Code structure
+**All layers can exist within the same application or process.**
+
+**11. 🏢 N-Tier Architecture (Physical Separation)**
+
+- Refers to the **physical deployment** of application components to different machines or environments (tiers).
+- Each tier is deployed independently, possibly on different servers or containers:
+
+  - Web Tier (Web Server)
+  - Application Tier (App Server)
+  - Data Tier (Database Server)
+
+🎯 Focus: Deployment & infrastructure
+
+**N-Layered vs N-Tier Architecture**
+
+| Feature                   | **N-Layered Architecture**   | **N-Tier Architecture**          |
+| ------------------------- | -------------------------- | -------------------------------- |
+| Separation Type           | Logical (in code)          | Physical (in deployment)         |
+| Primary Concern           | Code organization          | Scalability, security, isolation |
+| Inter-layer Communication | In-process method calls    | Network calls (HTTP, RPC, etc.)  |
+| Deployment                | Usually one app            | Multi-server or multi-host       |
+| Testing                   | Easier to test in one unit | Requires integration testing     |
+| DevOps Complexity         | Simple                     | Higher                           |
+
+
+**12. What is Clean Architecture?**
+
+**Clean Architecture** is a software design pattern proposed by **Robert C. Martin (Uncle Bob)** that emphasizes **separation of concerns** and **dependency inversion**.
+
+  ✅ **Core idea:** Organize the system so that **business rules are independent** of frameworks, UI, databases, or any external dependencies.
+
+
+
 
 
