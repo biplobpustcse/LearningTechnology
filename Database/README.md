@@ -184,6 +184,95 @@ WITH CTE_Example AS (
 )
 SELECT * FROM CTE_Example WHERE another_condition;
 ```
+**16. What is Deadlock in SQL Server?**
+
+A **deadlock** occurs when two or more transactions block each other, waiting for resources that each holds. SQL Server automatically detects and resolves deadlocks by killing one of the transactions.
+
+**Example of Deadlock:**
+
+**Transaction 1:**
+```
+BEGIN TRAN;
+UPDATE Orders SET Status = 'Processing' WHERE OrderID = 1;
+-- waits for Product lock
+UPDATE Products SET Stock = Stock - 1 WHERE ProductID = 100;
+```
+**Transaction 2:**
+```
+BEGIN TRAN;
+UPDATE Products SET Stock = Stock - 1 WHERE ProductID = 100;
+-- waits for Order lock
+UPDATE Orders SET Status = 'Processing' WHERE OrderID = 1;
+```
+🛑 Now both transactions are waiting for each other to release a lock — that’s a **deadlock**.
+
+**🛡️ How to Prevent Deadlocks:**
+
+| Strategy                            | Explanation                                                    |
+| ----------------------------------- | -------------------------------------------------------------- |
+| **Consistent Lock Order**           | Always access tables in the **same order** in all transactions |
+| **Keep Transactions Short**         | Avoid long-running transactions that hold locks                |
+| **Use `WITH (NOLOCK)` (carefully)** | Read data without locking (can cause dirty reads)              |
+| **Reduce Lock Contention**          | Use proper indexes and avoid unnecessary locking               |
+| **Retry Logic in Application**      | Catch deadlock errors and **retry** the transaction            |
 
 
+**17. Difference between ISNULL() and COALESCE()?**
+
+- **ISNULL()** allows only two parameters.
+- **COALESCE()** allows multiple parameters and returns the first non-null value.
+- **COALESCE()** is ANSI standard.
+
+**18. What are window functions?**
+
+Functions that perform calculations across a set of table rows that are somehow related to the current row.
+
+**Example:**
+```
+SELECT 
+  EmployeeID,
+  Department,
+  Salary,
+  RANK() OVER (PARTITION BY Department ORDER BY Salary DESC) AS RankInDept
+FROM Employees;
+```
+➡️ This gives each employee a **rank within their department** based on salary.
+
+**Common Window Functions:**
+
+| Function                      | Description                                       |
+| ----------------------------- | ------------------------------------------------- |
+| `ROW_NUMBER()`                | Gives a unique row number within a partition      |
+| `RANK()`                      | Assigns rank with gaps for ties                   |
+| `DENSE_RANK()`                | Ranks without gaps for ties                       |
+| `NTILE(n)`                    | Divides rows into `n` groups                      |
+| `LAG()` / `LEAD()`            | Accesses previous/next row value                  |
+| `SUM()` / `AVG()` / `COUNT()` | Aggregate across a window without collapsing rows |
+
+**19. How do you optimize a slow SQL query?**
+
+- Use **indexes**
+- Avoid SELECT *
+- Use proper **JOINs** and **WHERE** conditions
+- Avoid **nested subqueries** when possible
+- Analyze with **Execution Plan**
+- Use **stored procedures** for heavy logic
+
+**20. Explain normalization vs denormalization.**
+
+| Feature        | Normalization                        | Denormalization          |
+| -------------- | ------------------------------------ | ------------------------ |
+| Purpose        | Reduce redundancy, improve integrity | Improve read performance |
+| Data Structure | Many small tables with relationships | Few large tables         |
+| Use Case       | OLTP systems                         | OLAP/reporting systems   |
+
+**21. What is IDENTITY in SQL Server?**
+
+**IDENTITY** is a property used to create **auto-incrementing numeric values in a column** (usually for primary keys).
+```
+CREATE TABLE Users (
+  Id INT IDENTITY(1,1) PRIMARY KEY,
+  Name VARCHAR(50)
+);
+```
 
