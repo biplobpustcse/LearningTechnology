@@ -129,7 +129,61 @@ A **Function** is a database object that takes input parameters, performs calcul
 | **Output Parameters**     | ✅ Supports `OUTPUT` parameters                             | ❌ No output parameters (just return value)          |
 | **Exception Handling**    | ✅ Can use `TRY...CATCH`                                    | ❌ Limited or no error handling                      |
 
+**11. What is a Transaction?**
 
+A **transaction** in SQL is **a sequence of one or more SQL operations** that are executed as a **single unit of wor**k. A transaction ensures data **integrity** by following the **ACID** properties — meaning the operations **either all succeed or all fail**.
+
+**Key Properties (ACID):**
+
+| Property            | Meaning                                                                 |
+| ------------------- | ----------------------------------------------------------------------- |
+| **A - Atomicity**   | All operations in a transaction are completed, or none at all.          |
+| **C - Consistency** | Brings database from one valid state to another. |
+| **I - Isolation**   | Transactions don't affect each other.           |
+| **D - Durability**  | Once committed, changes are permanently saved—even after a crash.       |
+
+**Example:**
+```
+BEGIN TRANSACTION;
+
+UPDATE Accounts SET Balance = Balance - 100 WHERE AccountID = 1;
+UPDATE Accounts SET Balance = Balance + 100 WHERE AccountID = 2;
+
+COMMIT;  -- or ROLLBACK; if something goes wrong
+```
+🔁 If any part of the transaction fails (e.g., second update), you can use ROLLBACK to undo all changes made in that transaction.
+
+**12. What is the difference between WHERE and HAVING?**
+
+- **WHERE**: Used to filter rows **before** grouping.
+- **HAVING**: Used to filter groups **after** aggregation.
+
+**14. What is the difference between OLTP and OLAP?**
+
+| Feature               | **OLTP (Online Transaction Processing)**          | **OLAP (Online Analytical Processing)**          |
+| --------------------- | ------------------------------------------------- | ------------------------------------------------ |
+| **Purpose**           | Handles **day-to-day transactions**               | Performs **data analysis and reporting**         |
+| **Operations**        | Read/write (INSERT, UPDATE, DELETE)               | Read-heavy (complex SELECT queries, aggregation) |
+| **Data Volume**       | Deals with **small, transactional data**          | Handles **large volumes of historical data**     |
+| **Query Complexity**  | Simple, short queries                             | Complex, long-running analytical queries         |
+| **Normalization**     | Highly normalized (to reduce redundancy)          | Denormalized (to improve query performance)      |
+| **Speed**             | Optimized for **fast processing of transactions** | Optimized for **query performance and analysis** |
+| **Users**             | Operational users (cashiers, clerks, staff)       | Business analysts, decision-makers               |
+| **Example Use Cases** | Banking, eCommerce, Reservation Systems           | Business intelligence, Data warehousing          |
+| **Database Design**   | ER (Entity-Relationship) model                    | Star or Snowflake schema                         |
+| **Backup Frequency**  | Frequent, critical                                | Periodic                                         |
+
+**15. What are Common Table Expressions (CTEs)?**
+
+CTEs are **temporary result sets** that can be referred to within a SELECT, INSERT, UPDATE, or DELETE.
+It **improves query readability** and is especially useful for recursive queries or **breaking complex logic into simpler parts**.
+
+```
+WITH CTE_Example AS (
+  SELECT Id, Name FROM Employees WHERE condition
+)
+SELECT * FROM CTE_Example WHERE another_condition;
+```
 
 
 
