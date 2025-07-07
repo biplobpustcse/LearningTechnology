@@ -30,5 +30,106 @@ Soft state, Eventually consistent) and is designed for **scalability and high pe
 | **Scalability**    | Vertical (scale-up)           | Horizontal (scale-out)                   |
 | **Examples**       | MySQL, PostgreSQL, SQL Server | MongoDB, Redis, Cassandra, Neo4j         |
 
+**2. What is the difference between DELETE, TRUNCATE, and DROP?**
+
+| Operation  | Description           | Can Rollback | Affects Structure? | Resets Identity? |
+| ---------- | --------------------- | ------------ | ------------------ | ---------------- |
+| `DELETE`   | Deletes selected rows | Yes          | No                 | No               |
+| `TRUNCATE` | Deletes all rows      | No           | No                 | Yes              |
+| `DROP`     | Deletes the table     | No           | Yes                | N/A              |
+
+**3. What is a Primary Key and Unique Key?**
+
+**Primary Key:**
+
+A **primary key** uniquely identifies each record in a table. It **cannot be NULL** and must be **unique** for every row.
+
+**Unique Key:**
+
+A **Unique Key** ensures all values in a column (or a group of columns) are distinct—i.e., no duplicate values are allowed.It **allows a NULL** value.
+
+**🔄 Difference Between Primary Key and Unique Key:**
+
+| Feature        | Primary Key        | Unique Key               |
+| -------------- | ------------------ | ------------------------ |
+| Uniqueness     | Must be unique     | Must be unique           |
+| Nulls Allowed  | ❌ Not allowed      | ✅ Allowed (1 per column) |
+| Number Allowed | Only one per table | Can have multiple        |
+
+
+**4. What is a Foreign Key?**
+
+A **foreign key** is a field in a table that is the **primary key in another table**. It enforces referential integrity between two related tables.
+
+**5. What are Constraints in SQL?**
+
+**Constraints** in SQL are rules applied to columns in a table to enforce **data integrity, accuracy, and consistency**. They restrict the type of data that can be inserted or updated in a table.
+
+| Constraint      | Description                                               |
+| --------------- | --------------------------------------------------------- |
+| **PRIMARY KEY** | Uniquely identifies each row in a table. Cannot be null.  |
+| **FOREIGN KEY** | Enforces a link between the data in two tables.           |
+| **UNIQUE**      | Ensures all values in a column are different.             |
+| **NOT NULL**    | Prevents null values from being inserted into a column.   |
+| **CHECK**       | Validates values in a column against a logical condition. |
+| **DEFAULT**     | Sets a default value for a column if none is provided.    |
+
+**6. What is normalization?**
+
+**Normalization** is the process of **organizing data** to **reduce redundancy** and improve **data integrity**. It involves dividing large tables into smaller, related tables.
+
+**7. What are the different types of JOINs in SQL?**
+
+- **INNER JOIN:** Matches records in both tables.
+- **LEFT JOIN:** All records from left table + matched records from right.
+- **RIGHT JOIN:** All records from right table + matched from left.
+- **FULL OUTER JOIN:** All records from both tables.
+- **CROSS JOIN:** Cartesian product.
+
+**8. What is an Index? What are its types?**
+
+An **index** is a database object that improves the **speed of data retrieval** operations on a table. It acts like a **lookup table** that helps the database find rows more quickly—similar to an index in a book.
+
+**Types:**
+
+- **Clustered Index:** Sorts data physically in table.
+- **Non-Clustered Index:** Creates a separate structure for quick lookup.
+
+**🔄 Difference Between Clustered and Non-Clustered Index:**
+
+| Feature              | Clustered Index                         | Non-Clustered Index                     |
+| -------------------- | --------------------------------------- | --------------------------------------- |
+| **Data Storage**     | Sorts and stores actual table data      | Stores index separately from table data |
+| **Number per Table** | Only **one**                            | Can be **multiple**                     |
+| **Access Speed**     | Faster for range queries                | Slightly slower, uses pointer to data   |
+| **Example Use**      | Primary key or frequently sorted column | Columns used in search filters or joins |
+
+**9. What is a View in SQL?**
+
+A **View** is a **virtual table** based on the result of a query. It **doesn't store data itself**, only the SQL logic to retrieve data.
+
+**10. What is a Stored Procedure ans Function?**
+
+**Stored Procedure:**
+
+A **stored procedure** is a precompiled collection of **SQL statements** stored in the database. It improves performance, security, and reusability.
+
+**Stored Function:**
+
+A **Function** is a database object that takes input parameters, performs calculations or operations, and **returns a single value or a table**. It’s mainly used in SELECT, WHERE, or JOIN clauses.
+
+**🔄 Difference Between Stored Procedure and Function:**
+
+| Feature                   | Stored Procedure                                            | Function                                            |
+| ------------------------- | ----------------------------------------------------------- | --------------------------------------------------- |
+| **Return Type**           | Can return **0 or more values** using `OUT` or result sets  | Always returns **a single value** (scalar or table) |
+| **Use in SQL Statements** | Cannot be used directly in SELECT statements                | Can be used **inside SELECT, WHERE, etc.**          |
+| **DML Operations**        | ✅ Can perform INSERT, UPDATE, DELETE                       | 🚫 Generally **not recommended** for DML            |
+| **Transaction Handling**  | ✅ Supports transactions (`BEGIN`, `COMMIT`)                | ❌ Cannot manage transactions                        |
+| **Output Parameters**     | ✅ Supports `OUTPUT` parameters                             | ❌ No output parameters (just return value)          |
+| **Exception Handling**    | ✅ Can use `TRY...CATCH`                                    | ❌ Limited or no error handling                      |
+
+
+
 
 
