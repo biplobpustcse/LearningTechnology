@@ -275,4 +275,172 @@ CREATE TABLE Users (
   Name VARCHAR(50)
 );
 ```
+**22. What is the default port for SQL Server?**
+
+The default port is **1433** for TCP/IP connections.
+
+**23. What is a trigger in SQL Server?**
+
+A trigger is a special kind of stored procedure that runs **automatically** in response to certain events (INSERT, UPDATE, DELETE) on a table.
+
+```
+CREATE TRIGGER trg_UpdateLog
+ON Employees
+AFTER INSERT
+AS
+BEGIN
+  INSERT INTO AuditLog (Description) VALUES ('Employee inserted.');
+END;
+```
+**24. How do you handle errors in SQL Server using TRY...CATCH?**
+
+```
+BEGIN TRY
+  -- SQL Statements
+END TRY
+BEGIN CATCH
+  SELECT ERROR_MESSAGE() AS ErrorMessage;
+END CATCH
+```
+**25. How do you check for blocking and deadlocks in SQL Server?**
+
+- Use sp_who2 to check blocking sessions
+- Use SQL Server Profiler or Extended Events for deadlock tracing
+- Use the system views:
+sys.dm_exec_requests, sys.dm_tran_locks, sys.dm_os_waiting_tasks
+
+**26. What is the difference between WITH(NOLOCK) and normal SELECT?**
+
+**WITH(NOLOCK)** allows dirty reads (uncommitted data) and avoids locking but can return inconsistent or duplicate data. Use only when data consistency is not critical.
+
+**27. What is SQL Server Profiler?**
+
+A graphical tool that captures SQL Server events such as query execution, stored procedures, login failures, deadlocks, etc., for performance tuning and debugging.
+
+**28. Find the 3rd Highest Salary from a Table**
+```
+SELECT DISTINCT TOP 1 Salary
+FROM (
+  SELECT DISTINCT TOP 3 Salary
+  FROM Employees
+  ORDER BY Salary DESC
+) AS Temp
+ORDER BY Salary ASC;
+```
+**Alternative using ROW_NUMBER():**
+```
+WITH RankedSalaries AS (
+  SELECT Salary, ROW_NUMBER() OVER (ORDER BY Salary DESC) AS Rank
+  FROM (SELECT DISTINCT Salary FROM Employees) AS DistinctSalaries
+)
+SELECT Salary
+FROM RankedSalaries
+WHERE Rank = 3;
+```
+**Nth Highest Salary:**
+
+Method 1: Using DENSE_RANK()
+```
+WITH RankedSalaries AS (
+  SELECT 
+    Salary,
+    DENSE_RANK() OVER (ORDER BY Salary DESC) AS Rank
+  FROM Employees
+)
+SELECT Salary
+FROM RankedSalaries
+WHERE Rank = N;  -- Replace N with the rank you want
+```
+Method 2: Using ROW_NUMBER() (if duplicates are not important)
+```
+WITH SalaryRanks AS (
+  SELECT 
+    Salary,
+    ROW_NUMBER() OVER (ORDER BY Salary DESC) AS RowNum
+  FROM Employees
+)
+SELECT Salary
+FROM SalaryRanks
+WHERE RowNum = N;
+```
+Method 3: Using Subquery with DISTINCT and ORDER BY
+```
+SELECT DISTINCT Salary
+FROM Employees
+ORDER BY Salary DESC
+OFFSET N - 1 ROWS
+FETCH NEXT 1 ROWS ONLY;
+```
+
+**29. Remove Duplicate Rows from a Table**
+
+You have a table Employees with duplicate rows. How would you delete the duplicates but keep one copy?
+
+Using **CTE** and **ROW_NUMBER()**:
+```
+WITH CTE AS (
+  SELECT *, ROW_NUMBER() OVER (PARTITION BY Name, Salary, DepartmentId ORDER BY Id) AS rn
+  FROM Employees
+)
+DELETE FROM CTE WHERE rn > 1;
+```
+**Explanation:**
+
+- ROW_NUMBER() assigns a row number for each duplicate group.
+- Keep rn = 1, delete rn > 1.
+
+**30. Count Duplicate Records in a Table**
+```
+SELECT Name, COUNT(*) AS Count
+FROM Employees
+GROUP BY Name
+HAVING COUNT(*) > 1;
+```
+**31. Get the Highest Salary per Department**
+
+```
+SELECT DepartmentId, MAX(Salary) AS MaxSalary
+FROM Employees
+GROUP BY DepartmentId;
+```
+**32. Find Employees Who Earn More Than the Average Salary**
+
+```
+SELECT * FROM Employees
+WHERE Salary > (SELECT AVG(Salary) FROM Employees);
+```
+**33. Difference Between RANK(), DENSE_RANK() and ROW_NUMBER()?**
+```
+SELECT Name, Salary,
+  RANK() OVER (ORDER BY Salary DESC) AS Rank,
+  DENSE_RANK() OVER (ORDER BY Salary DESC) AS DenseRank,
+  ROW_NUMBER() OVER (ORDER BY Salary DESC) AS RowNum
+FROM Employees;
+```
+| Function       | Duplicates Allowed | Gaps in Rank | Use Case                          |
+| -------------- | ------------------ | ------------ | --------------------------------- |
+| `RANK()`       | Yes                | Yes          | Ranking with gaps for duplicates  |
+| `DENSE_RANK()` | Yes                | No           | Consecutive ranks, even with ties |
+| `ROW_NUMBER()` | No                 | No           | Unique sequence for each row      |
+
+**34. Find Employees Who Don’t Belong to Any Department (Missing FK)**
+```
+SELECT * FROM Employees E
+LEFT JOIN Departments D ON E.DepartmentId = D.Id
+WHERE D.Id IS NULL;
+```
+**35. Swap Two Values in a Table (e.g., Gender M <-> F)**
+
+```
+UPDATE Employees
+SET Gender = CASE 
+               WHEN Gender = 'M' THEN 'F'
+               WHEN Gender = 'F' THEN 'M'
+             END;
+```
+
+
+
+
+
 
