@@ -280,7 +280,8 @@ Let’s first create some folders to organize the controllers of different API v
 - **On controllers:**
 ```
 [ApiVersion("1.0")]
-[Route("api/v{version:apiVersion}/[controller]")]
+[Route("api/[controller]")]
+//[Route("api/v{version:apiVersion}/[controller]")] //URI Versioning
 public class ProductsController : ControllerBase
 {
     [HttpGet]
@@ -290,7 +291,8 @@ public class ProductsController : ControllerBase
 - **Add version-specific controllers as needed:**
 ```
 [ApiVersion("2.0")]
-[Route("api/v{version:apiVersion}/[controller]")]
+[Route("api/[controller]")]
+//[Route("api/v{version:apiVersion}/[controller]")] //URI Versioning
 public class ProductsController : ControllerBase
 {
     [HttpGet]
