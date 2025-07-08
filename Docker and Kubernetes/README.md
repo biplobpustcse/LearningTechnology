@@ -1,5 +1,6 @@
-## Questions and answers
+# Questions and answers
 
+## Docker
 **1. What is Docker?**
 
 **Docker** is an open-source platform that enables developers to **build, ship, and run** applications in isolated environments called **containers**. Docker simplifies the deployment process by packaging a application and all its dependencies (runtime, libraries, etc.) into a single, portable unit. This ensures consistency across different environments (development, testing, production) and eliminates "**it works on my machine**" issues.
@@ -57,6 +58,7 @@ ENTRYPOINT ["dotnet", "MyDotNetApp.dll"]
 - **ADD**: Similar to COPY, but it can also extract tar archives and fetch remote URLs. COPY is generally preferred for clarity unless you need ADD's specific features.
 
 **6. What is Docker Hub?**
+
 **Docker Hub** is a **cloud-based registry service** provided by Docker for finding, sharing, and managing Docker images. It's a central repository for both public and private images.
 
 **7. What are Docker volumes and why are they used?**
@@ -66,4 +68,26 @@ ENTRYPOINT ["dotnet", "MyDotNetApp.dll"]
 **8. Explain Docker Compose.**
 
 **Docker Compose** is a **tool** for **defining and running multi-container Docker application**s. You use a **YAML** file (typically docker-compose.yml) to configure your application's services, networks, and volumes. With a single command (docker-compose up), you can start all the services defined in your configuration.
+
+**9. What is the .dockerignore file?**
+
+Similar to **.gitignore**, a **.dockerignore** file specifies files and directories that should be excluded from the Docker build context when you run docker build. This helps reduce the build time and image size by preventing unnecessary or sensitive data from being sent to the Docker daemon.
+
+## Kubernetes (K8s)
+
+**1. What is Kubernetes (K8s)?**
+
+Kubernetes is an open-source container orchestration platform that **automates** the **deployment, scaling, and management** of **containerized applications**. It groups containers into logical units for easy management and discovery.
+
+**2. Why do we need container orchestration?**
+
+In a microservices architecture or when running many containers, managing them manually becomes complex. Orchestration tools like Kubernetes provide:
+
+- **Automated deployment and scaling**: Deploy applications, scale them up/down based on demand.
+- **Self-healing**: Automatically restarts failed containers, replaces unhealthy ones, and reschedules containers on healthy nodes.
+- **Service discovery and load balancing**: Containers can find each other, and traffic is distributed efficiently.
+- **Configuration and secret management**: Centralized management of application configurations and sensitive data.
+- **Resource allocation**: Efficiently allocates resources (CPU, memory) across the cluster.
+
+
 
