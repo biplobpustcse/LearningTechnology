@@ -24,6 +24,8 @@ Docker containers and virtual machines (VMs) are both technologies used to isola
 | Boot Time   | Seconds               | Minutes                    |
 | Performance | Near-native           | Overhead due to hypervisor |
 
+![image](https://github.com/user-attachments/assets/023e3e47-d114-46cd-bd95-22dd92e39d44)
+
 **4. What is a Dockerfile, and how do you write one for a .NET application?**
 
 A **Dockerfile** is a **text file** that **contains a set of instructions** to build a Docker image. Each instruction creates a layer in the image.
