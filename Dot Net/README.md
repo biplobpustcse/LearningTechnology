@@ -197,3 +197,129 @@ public IActionResult HRPortal()
 **9. What is minimal api in .net core?**
 
 Minimal APIs in .NET Core provide a streamlined approach to building HTTP APIs with minimal code and dependencies, ideal for microservices and scenarios requiring reduced boilerplate. They simplify API development by allowing direct route definition and action specification within the Program.cs file, eliminating the need for controllers or routing attributes.
+
+**10. API Versioning in ASP.NET Core (.NET 8)**
+
+API versioning is essential for evolving your API **without breaking existing clients**. ASP.NET Core provides **built-in support to manage multiple versions** of your API in a clean and scalable way.
+
+**🚀 Why Use API Versioning?**
+
+- Maintain **backward compatibility**
+- Support **multiple clients** using different versions
+- Enable **safe and gradual rollouts** of new features
+
+**Different Ways of Versioning API**
+
+There are several ways to version an API.
+
+- **Query Parameter Versioning**: The version is passed as a query parameter in the URL.
+```
+GET /api/products?api-version=1.0
+```
+- **URI Versioning**: This is the most common approach where the version is included in the URL.
+```
+GET /api/v1/products
+GET /api/v2/products
+```
+- **Header Versioning**: In this approach, the version is specified in the request header.
+```
+GET /api/products
+Headers: api-version: 1.0
+```
+- **Content Negotiation Versioning (Media Versioning)**
+
+Also, we can combine multiple ways of versioning. We will explore all these ways in the upcoming sections.
+
+**✅ Setup in ASP.NET Core (.NET 8)**
+
+**1.0 Install the NuGet Package**
+```
+dotnet add package Microsoft.AspNetCore.Mvc.Versioning
+```
+**2.0 Configure in Program.cs**
+
+After installing the package, we’ll need to add the versioning service to ASP.NET Core’s dependency injection container. Open the Program.cs file and add the following:
+```
+// Add services to the container.
+builder.Services.AddApiVersioning();
+// ...
+```
+After adding the service let’s again send a get request to the following endpoint:
+```
+https://localhost:7076/api/books
+```
+
+This time we get an error (400 Bad Request) response:
+```
+{
+    "error": {
+        "code": "ApiVersionUnspecified",
+        "message": "An API version is required, but was not specified.",
+        "innerError": null
+    }
+}
+```
+**Full configration**
+```
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+    options.ApiVersionReader = ApiVersionReader.Combine(
+        new QueryStringApiVersionReader("api-version"),
+        new HeaderApiVersionReader("X-Version"),
+        new UrlSegmentApiVersionReader()
+    );
+});
+```
+**3.0 Apply Version Attributes**
+
+- **On controllers:**
+```
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
+public class ProductsController : ControllerBase
+{
+    [HttpGet]
+    public IActionResult Get() => Ok("v1 response");
+}
+```
+- **Add version-specific controllers as needed:**
+```
+[ApiVersion("2.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
+public class ProductsV2Controller : ControllerBase
+{
+    [HttpGet]
+    public IActionResult Get() => Ok("v2 response");
+}
+```
+**🔍 Versioning Options**
+
+- **Query String**: api/products?api-version=1.0
+- **HTTP Header**: X-Version: 1.0
+- **URL Segment**: /api/v1/products
+
+📌 Use ApiVersionReader.Combine() to support multiple methods simultaneously.
+
+**🧪 Tips**
+
+- Always set AssumeDefaultVersionWhenUnspecified = true to avoid versioning errors.
+- Use ReportApiVersions = true to expose supported versions in response headers.
+
+**Deprecating Versions**
+
+If we want to deprecate an API version without deleting it, we can use the Deprecated property as follows:
+```
+[ApiVersion("2.0", Deprecated = true)]
+ [Route("api/[controller]")]
+ [ApiController]
+ public class BooksController : ControllerBase
+ {
+...
+```
+Now, if we send a get request, ASP.NET core provides a api-deprecated-versions response header with the deprecated versions. We’ll still be able to work with that API but marked it as deprecated.
+
+
+    
