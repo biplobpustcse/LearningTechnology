@@ -275,6 +275,8 @@ builder.Services.AddApiVersioning(options =>
 ```
 **3.0 Apply Version Attributes**
 
+Let’s first create some folders to organize the controllers of different API versions better. We’ll create two folders called “v1” and “v2” inside the “Controllers” folder. Then we’ll move the ProductsController.cs to the “v1” folder and will add .v1 to the namespace.
+
 - **On controllers:**
 ```
 [ApiVersion("1.0")]
@@ -289,7 +291,7 @@ public class ProductsController : ControllerBase
 ```
 [ApiVersion("2.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
-public class ProductsV2Controller : ControllerBase
+public class ProductsController : ControllerBase
 {
     [HttpGet]
     public IActionResult Get() => Ok("v2 response");
