@@ -5,6 +5,8 @@
 
 **Docker** is an open-source platform that enables developers to **build, ship, and run** applications in isolated environments called **containers**. Docker simplifies the deployment process by packaging a application and all its dependencies (runtime, libraries, etc.) into a single, portable unit. This ensures consistency across different environments (development, testing, production) and eliminates "**it works on my machine**" issues.
 
+![image](https://github.com/user-attachments/assets/a287384d-1e3b-422d-a5b8-19f3d0dfbb37)
+
 **2. Explain the difference between a Docker Image and a Docker Container.**
 
 - **Docker Image:** A read-only template or blueprint that contains the application code, runtime, libraries, environment variables, and configuration files needed to run an application. It's like a compiled executable.
@@ -79,6 +81,8 @@ Similar to **.gitignore**, a **.dockerignore** file specifies files and director
 
 Kubernetes is an open-source container orchestration platform that **automates** the **deployment, scaling, and management** of **containerized applications**. It groups containers into logical units for easy management and discovery.
 
+![image](https://github.com/user-attachments/assets/82b148ef-3776-4c16-916f-c3afc28ad1d1)
+
 **2. Why do we need container orchestration?**
 
 In a microservices architecture or when running many containers, managing them manually becomes complex. Orchestration tools like Kubernetes provide:
@@ -89,5 +93,8 @@ In a microservices architecture or when running many containers, managing them m
 - **Configuration and secret management**: Centralized management of application configurations and sensitive data.
 - **Resource allocation**: Efficiently allocates resources (CPU, memory) across the cluster.
 
+**3. What is a Pod in Kubernetes?**
+
+A **Pod** is the smallest deployable unit in Kubernetes that can contain one or more containers sharing storage/network.
 
 
