@@ -68,6 +68,8 @@ An API Gateway acts as a single entry point for all client requests in a microse
 - Handles **authentication, rate limiting**, logging, etc.
 - Aggregates multiple service responses
 
+![𝐀𝐏𝐈 𝐆𝐚𝐭𝐞𝐰𝐚𝐲 𝐫𝐨𝐥𝐞𝐬 𝐢𝐧 𝐌𝐢𝐜𝐫𝐨𝐬𝐞𝐫𝐯𝐢𝐜𝐞 𝐞𝐱𝐩𝐥𝐚𝐢𝐧𝐞𝐝 𝐬𝐢𝐦𝐩𝐥𝐲](https://github.com/user-attachments/assets/36e061ae-c156-43af-ae3b-b7fbd64515a6)
+
 **8. ❓ How do you handle inter-service communication in Microservices?**
 
 - **Synchronous**: REST, gRPC
