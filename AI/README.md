@@ -69,6 +69,14 @@ An **LLM** is a type of **AI model** specialized in **understanding and generati
 | Claude     | Anthropic       | Business AI assistant         |
 | Gemini     | Google DeepMind | Text, code, and reasoning     |
 
+**In your project:**
+
+- You’re using **OpenAI’s GPT-4 or GPT-3.5 model**
+- This model is the **LLM** (it has billions of parameters and was trained on massive text data)
+- The API call you make to "https://api.openai.com/v1/chat/completions" uses this LLM to generate the answer
+
+So, your project **doesn’t contain the LLM directly**, but it uses it by calling OpenAI’s API.
+
 **10. How does an AI model differ from an LLM?**
 
 An **AI model** is a trained algorithm that makes predictions or decisions based on data. A Large Language Model (**LLM**) is a specific type of AI model trained on vast text data to understand and generate natural language using deep learning techniques like transformers. GPT-4, for example, is a state-of-the-art LLM used in ChatGPT.
@@ -83,4 +91,23 @@ An **AI model** is a trained algorithm that makes predictions or decisions based
 - **DALL·E** creates images from text descriptions.
 - **GitHub Copilot** helps generate code.
 
+**12. What is Ollama?**
 
+**Ollama** is an open-source platform designed to simplify the **deployment and management** of **large language models** (LLMs) directly on your **local machine**. It enables users to run various open-source LLMs—such as **Llama 3**, DeepSeek-R1, Qwen 3, Mistral, and Gemma 3—without relying on cloud services, thereby enhancing data privacy and reducing operational costs.
+
+**Key Features of Ollama:**
+
+- **Local Execution**: Ollama allows you to run LLMs locally on macOS, Linux, and Windows systems. This local deployment ensures that sensitive data remains on your device, addressing privacy concerns and eliminating the need for internet connectivity during model inference. 
+- **Model Management:** The platform provides tools to download, run, and manage AI models efficiently. It bundles model weights, configurations, and dependencies into a single package, simplifying the setup process. 
+- **Support for Multiple Models**: Ollama supports a variety of models, including Llama 3.3, DeepSeek-R1, Qwen 3, Mistral, and Gemma 3, allowing users to choose the model that best fits their specific needs. 
+- **Developer-Friendly Interface**: With a simple command-line interface and API support, Ollama caters to developers and researchers aiming to integrate LLMs into their applications or workflows.
+
+**Use Cases:**
+
+Ollama is particularly beneficial for:
+
+- **AI Developers and Researchers**: Who require a controlled environment to test and fine-tune models without external dependencies.
+- **Businesses**: Looking to incorporate AI capabilities into their products while maintaining data sovereignty and reducing latency.
+- **Educational Institutions**: That need accessible tools for teaching and experimenting with AI models.
+
+By facilitating the local deployment of LLMs, Ollama empowers users to harness the capabilities of advanced AI models while maintaining control over their data and infrastructure.
