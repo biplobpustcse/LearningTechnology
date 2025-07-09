@@ -28,6 +28,8 @@ Some common architecture patterns include:
 
 **3. What is the difference between Monolithic and Microservices Architecture?**
 
+A **monolithic** architecture builds an application as a **single, indivisible unit**, while a **microservices** architecture is a collection of independently deployable, smaller services.
+
 | Feature          | Monolithic              | Microservices                        |
 | ---------------- | ----------------------- | ------------------------------------ |
 | Deployment       | Single unit             | Independent services                 |
