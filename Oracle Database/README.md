@@ -192,10 +192,34 @@ CREATE GLOBAL TEMPORARY TABLE temp_emps (
 
 **20. What are the types of Indexes in Oracle?**
 
-- B-tree Index (default)
-- Bitmap Index
-- Function-based Index
-- Composite Index
+An **index** in Oracle is a separate **data structure** (typically a B-tree) that stores the values of one or more columns in a way that **speeds up** data retrieval operations like SELECT, JOIN, WHERE, and ORDER BY.
+
+Think of it **like a pointer** to data — instead of scanning every row in a table, Oracle can use the index to jump straight to the data.
+
+- **B-tree Index**: Default index type; balanced tree structure for fast equality & range lookups
+- **Bitmap Index**:Uses bitmaps; best for low-cardinality columns (e.g., gender, status)
+- **Function-based Index**:Indexes result of a function or expression (e.g., UPPER(name))
+- **Composite Index**:Index on multiple columns
+
+**Create a Simple Index**
+```
+CREATE INDEX idx_emp_name ON employees(last_name);
+```
+**Create a Composite Index**
+```
+CREATE INDEX idx_emp_dept_name ON employees(department_id, last_name);
+```
+**Unique Index**
+```
+CREATE UNIQUE INDEX idx_email ON users(email);
+```
+
+**🧼 Best Practices**
+
+- Index columns used in **WHERE, JOIN, ORDER BY, or GROUP BY**
+- Avoid over-indexing — only index what's queried often
+- Use bitmap indexes for low-cardinality columns
+- **Monitor** index usage and rebuild if fragmented
 
 
 
