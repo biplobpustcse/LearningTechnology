@@ -136,6 +136,15 @@ NEXT SYSDATE + 1
 AS
 SELECT DepartmentId, COUNT(*) FROM Employees GROUP BY DepartmentId;
 ```
+**Materialized View vs View**
+
+| Feature               | View                         | Materialized View              |
+| --------------------- | ---------------------------- | ------------------------------ |
+| **Data stored**       | ❌ No                         | ✅ Yes (physically stored)      |
+| **Query performance** | Slower for complex queries   | Faster                         |
+| **Up-to-date data**   | Always reflects current data | May be stale (until refreshed) |
+| **Can be indexed**    | ❌ No                         | ✅ Yes                          |
+
 
 **14. What is the difference between IN, EXISTS, and JOIN?**
 
