@@ -11,9 +11,11 @@ Oracle is a multi-model, enterprise-grade **Relational Database Management Syste
 
 | Feature            | `VARCHAR2`                                 | `VARCHAR`                                 |
 | ------------------ | ------------------------------------------ | ----------------------------------------- |
-| Current Behavior   | Treats NULL and empty strings as the same. | VARCHAR to distinguish between NULL and empty strings ('') |
+| Behavior           | Treats NULL and empty strings as the same. | VARCHAR to distinguish between NULL and empty strings ('') |
 | Standard           | ANSI SQL standard                          | Oracle's proprietary standard      |
 | Recommendation     | Do not use. Reserved for future changes.   | Always use. Stable and recommended.      |   
+
+**Current Behavior (No Difference)**: In all current Oracle versions, **VARCHAR behaves exactly like VARCHAR2**. This means that if you declare a column as VARCHAR, Oracle internally treats and stores it as VARCHAR2. The distinction between NULL and empty strings for VARCHAR as per the ANSI standard has not been implemented by Oracle.
 
 **3. What is a ROWID**?
 
