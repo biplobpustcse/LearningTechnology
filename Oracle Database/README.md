@@ -9,6 +9,12 @@ Oracle is a multi-model, enterprise-grade **Relational Database Management Syste
 - **VARCHAR2** is used to store variable-length strings and is the recommended type.
 - **VARCHAR** is reserved for future use and behaves like VARCHAR2 in current versions but may change.
 
+| Feature            | `VARCHAR2`                                                                    | `VARCHAR`                 |
+| ------------------ | ----------------------------------------------------------------------------- | ------------------------- |
+| Current Behavior   | Behaves identically to VARCHAR2. Treats NULL and empty strings as the same.   | Variable-length text      |
+| Standard           | ANSI SQL standard                                                             | Oracle's proprietary standard      |
+| Recommendation     | Do not use. Reserved for future changes.                                      | Always use. Stable and recommended.      |   
+
 **3. What is a ROWID**?
 
 **ROWID** is a unique identifier for a row in a table. It represents the physical location of the row (data block, row slot, etc.).
