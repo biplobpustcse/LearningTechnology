@@ -158,8 +158,15 @@ Oracle **RAC** (Real Application Clusters) allows multiple instances to access a
 
 **16. What is the use of ANALYZE and AUTOTRACE in Oracle?**
 
-- **ANALYZE**: Collects statistics on tables/indexes (older method).
-- **AUTOTRACE**: Used to display execution plan and resource usage.
+**ANALYZE and AUTOTRACE** are **tools** used by developers and DBAs to **analyze query performance, gather statistics**, and optimize SQL queries.
+
+| Feature      | ANALYZE                             | AUTOTRACE                                 |
+| ------------ | ----------------------------------- | ----------------------------------------- |
+| Purpose      | Collect stats, validate objects     | Show execution plan and performance stats |
+| Still used?  | Deprecated in favor of `DBMS_STATS` | ✅ Actively used                           |
+| Usage scope  | Tables, indexes, clusters           | SQL query execution                       |
+| Modern tool? | Use `DBMS_STATS` instead            | ✅ Yes, still relevant                     |
+
 
 **17. How to check execution plan of a query in Oracle?**
 ```
