@@ -9,9 +9,9 @@ Oracle is a multi-model, enterprise-grade **Relational Database Management Syste
 - **VARCHAR2** is used to store variable-length strings and is the recommended type.
 - **VARCHAR** is reserved for future use and behaves like VARCHAR2 in current versions but may change.
 
-| Feature            | `VARCHAR2`                                 | `VARCHAR`                                 |
+| Feature            | `VARCHAR`                                 | `VARCHAR2`                                 |
 | ------------------ | ------------------------------------------ | ----------------------------------------- |
-| Behavior           | Treats NULL and empty strings as the same. | VARCHAR to distinguish between NULL and empty strings ('') |
+| Behavior           | distinguish between NULL and empty strings ('') | Treats NULL and empty strings as the same. |
 | Standard           | ANSI SQL standard                          | Oracle's proprietary standard      |
 | Recommendation     | Do not use. Reserved for future changes.   | Always use. Stable and recommended.      |   
 
