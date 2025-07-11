@@ -163,3 +163,33 @@ Improves performance by tracking items using a unique identifier, preventing unn
 - Minification and tree-shaking
 - Using trackBy in *ngFor
 - Avoid unnecessary subscriptions
+
+**26. What is interceptor in Angular?**
+
+To add a JWT (JSON Web Token) to the header of HTTP requests in an Angular application, the recommended and most efficient approach is to implement an HTTP Interceptor. This ensures that the token is automatically included in all outgoing requests without needing to manually add it to each one.
+
+Generate a new service that implements the HttpInterceptor interface. This service will contain the logic for intercepting and modifying requests.
+
+'''
+    import { Injectable } from '@angular/core';
+    import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+    import { Observable } from 'rxjs';
+
+    @Injectable()
+    export class AuthInterceptor implements HttpInterceptor {
+      intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        const token = localStorage.getItem('jwt_token'); // Or wherever your token is stored
+
+        if (token) {
+          request = request.clone({
+            setHeaders: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+        }
+        return next.handle(request);
+      }
+    }
+    '''
+
+    
