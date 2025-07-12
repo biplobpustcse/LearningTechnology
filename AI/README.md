@@ -17,12 +17,12 @@ Artificial Intelligence (**AI**) is a **field of Computer Science** focuses on c
 
 **4. What is a neural network?**
 
-A computational model inspired by the **human brain**, composed of layers of interconnected "**neurons**" that can learn complex patterns from data.
+A computational model inspired by the **human brain**, composed of layers of interconnected **neurons** that can learn complex patterns from data.
 
 **5. Difference between CNN and RNN?**
 
-- **CNN (Convolutional Neural Network)**: Best for image data.
-- **RNN (Recurrent Neural Network)**: Best for sequential data like text or time series.
+- **CNN (Convolutional Neural Network)**: Best for image,video data.
+- **RNN (Recurrent Neural Network)**: Best for sequential data like text, audio, or time series.
 
 **6. What is transfer learning?**
 
