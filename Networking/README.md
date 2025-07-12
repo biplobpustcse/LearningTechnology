@@ -18,8 +18,8 @@ Example:
 142.250.190.78:443 → Google এর ওয়েব সার্ভার (443 মানে HTTPS দরজা বা Port)
 
 🛜 3. TCP/UDP (কথাবার্তার মাধ্যম)
-TCP: Safe, নিশ্চয়তা সহ Data পৌঁছে দেয়। (যেমন ওয়েবসাইট, API)
-UDP: দ্রুত, কিন্তু গ্যারান্টি নাই। (যেমন Online Game, Live Stream)
+TCP(Transmission Control Protocol) :Safe, নিশ্চয়তা সহ Data পৌঁছে দেয়। (যেমন ওয়েবসাইট, API)
+UDP(User Datagram Protocol): দ্রুত, কিন্তু গ্যারান্টি নাই। (যেমন Online Game, Live Stream)
 
 🛜 4. TCP Three-Way Handshake (ভদ্রভাবে শুরু করে )
 আপনি কাউকে Call দেওয়ার আগে কনফার্ম করো:-
