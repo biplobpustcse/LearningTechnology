@@ -54,7 +54,7 @@ Using **props**.
 <ChildComponent name="Biplob" />
 ```
 
-**5. What are components in React?**
+**8. What are components in React?**
 
 **React components** are the **building blocks** of a React application. There are two types:
 
@@ -64,3 +64,39 @@ These are simple JavaScript functions that accept **props** as an argument and r
 - **Class Components** – use **this** and **lifecycle methods**.
 
 These are ES6 classes that extend React.Component. They can hold and manage their own state using this.state and this.setState(), and they have access to lifecycle methods.
+
+**9. What are React Hooks? Explain useState and useEffect Hooks.**
+
+React Hooks **are functions** introduced in **React 16.8** that allow you to use **state and lifecycle features** in functional components. Hooks like **useState, useEffect, and useContext** make it easier to manage component logic without using classes, improving readability and reusability.
+
+- **useState**: This hook allows you to add **state** to functional components. It returns an array containing the current state value and a function to update it.
+- **useEffect**: This hook lets you perform **side effects** in functional components. Side effects are operations that interact with something **outside of the component's rendering**, such as data fetching, subscriptions, or manually changing the DOM. It runs after every render by default.
+```
+import React, { useState, useEffect } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log('Count changed:', count);
+  }, [count]);
+
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+```
+**10. What are the rules of Hooks? 📜**
+
+There are two main rules for using Hooks:
+
+- **Only call Hooks at the top level**: Don't call Hooks inside loops, conditions, or nested functions.
+- **Only call Hooks from React function**s: Call them from React functional components or from custom Hooks.
+
+**11. What is "lifting state up" in React? ⬆️**
+
+**Lifting state up** is a technique where you move the state from a child component to its closest common parent component. This allows multiple child components to share and synchronize their state. The parent component then passes the state and functions to update that state down to its children via props.
+
+
