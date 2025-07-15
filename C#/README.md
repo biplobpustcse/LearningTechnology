@@ -482,4 +482,38 @@ public class Person
 - Fields are suitable when you need a simple data storage mechanism within a class without any additional logic. They are often used for private or protected fields that should not be directly exposed outside the class.
 - Properties are more versatile and should be used when you need to expose fields while controlling access or adding logic. You can use properties to enforce data validation rules, compute values dynamically, or implement change tracking.
 
+**18. What is generic in c#?**
+
+In C#, **generics** allow us to write code that can work with **different data types** without specifying them at **compile time**.
+
+This means we can create reusable classes, methods, and interfaces that can handle various types of data, making your code more flexible and efficient. Essentially, we use placeholders (type parameters) for data types, and those placeholders are filled in when you actually use the generic code. 
+
+Generics use type parameters (often denoted by **T**, U, etc.) as placeholders for data types.
+
+**Example:**
+```
+// A generic class
+public class Box<T> {
+    private T item;
+
+    public void SetItem(T item) {
+        this.item = item;
+    }
+
+    public T GetItem() {
+        return this.item;
+    }
+}
+
+// Usage
+Box<string> stringBox = new Box<string>();
+stringBox.SetItem("Hello");
+string message = stringBox.GetItem(); // No casting needed
+
+Box<int> intBox = new Box<int>();
+intBox.SetItem(123);
+int number = intBox.GetItem(); // No casting needed
+```
+In this example, Box<T> is a generic class. When we create Box<string> and Box<int>, the **T** is replaced with string and int respectively, without any type casting. 
+
 

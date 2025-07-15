@@ -9,6 +9,14 @@ Oracle is a multi-model, enterprise-grade **Relational Database Management Syste
 - **VARCHAR2** is used to store variable-length strings and is the recommended type.
 - **VARCHAR** is reserved for future use and behaves like VARCHAR2 in current versions but may change.
 
+| Feature            | `VARCHAR`                                 | `VARCHAR2`                                 |
+| ------------------ | ------------------------------------------ | ----------------------------------------- |
+| Behavior           | distinguish between NULL and empty strings ('') | Treats NULL and empty strings as the same. |
+| Standard           | ANSI SQL standard                          | Oracle's proprietary standard      |
+| Recommendation     | Do not use. Reserved for future changes.   | Always use. Stable and recommended.      |   
+
+**Current Behavior (No Difference)**: In all current Oracle versions, **VARCHAR behaves exactly like VARCHAR2**. This means that if you declare a column as VARCHAR, Oracle internally treats and stores it as VARCHAR2. The distinction between NULL and empty strings for VARCHAR as per the ANSI standard has not been implemented by Oracle.
+
 **3. What is a ROWID**?
 
 **ROWID** is a unique identifier for a row in a table. It represents the physical location of the row (data block, row slot, etc.).
@@ -128,6 +136,15 @@ NEXT SYSDATE + 1
 AS
 SELECT DepartmentId, COUNT(*) FROM Employees GROUP BY DepartmentId;
 ```
+**Materialized View vs View**
+
+| Feature               | View                         | Materialized View              |
+| --------------------- | ---------------------------- | ------------------------------ |
+| **Data stored**       | ❌ No                         | ✅ Yes (physically stored)      |
+| **Query performance** | Slower for complex queries   | Faster                         |
+| **Up-to-date data**   | Always reflects current data | May be stale (until refreshed) |
+| **Can be indexed**    | ❌ No                         | ✅ Yes                          |
+
 
 **14. What is the difference between IN, EXISTS, and JOIN?**
 
@@ -141,8 +158,15 @@ Oracle **RAC** (Real Application Clusters) allows multiple instances to access a
 
 **16. What is the use of ANALYZE and AUTOTRACE in Oracle?**
 
-- **ANALYZE**: Collects statistics on tables/indexes (older method).
-- **AUTOTRACE**: Used to display execution plan and resource usage.
+**ANALYZE and AUTOTRACE** are **tools** used by developers and DBAs to **analyze query performance, gather statistics**, and optimize SQL queries.
+
+| Feature      | ANALYZE                             | AUTOTRACE                                 |
+| ------------ | ----------------------------------- | ----------------------------------------- |
+| Purpose      | Collect stats, validate objects     | Show execution plan and performance stats |
+| Still used?  | Deprecated in favor of `DBMS_STATS` | ✅ Actively used                           |
+| Usage scope  | Tables, indexes, clusters           | SQL query execution                       |
+| Modern tool? | Use `DBMS_STATS` instead            | ✅ Yes, still relevant                     |
+
 
 **17. How to check execution plan of a query in Oracle?**
 ```
@@ -168,10 +192,34 @@ CREATE GLOBAL TEMPORARY TABLE temp_emps (
 
 **20. What are the types of Indexes in Oracle?**
 
-- B-tree Index (default)
-- Bitmap Index
-- Function-based Index
-- Composite Index
+An **index** in Oracle is a separate **data structure** (typically a B-tree) that stores the values of one or more columns in a way that **speeds up** data retrieval operations like SELECT, JOIN, WHERE, and ORDER BY.
+
+Think of it **like a pointer** to data — instead of scanning every row in a table, Oracle can use the index to jump straight to the data.
+
+- **B-tree Index**: Default index type; balanced tree structure for fast equality & range lookups
+- **Bitmap Index**:Uses bitmaps; best for low-cardinality columns (e.g., gender, status)
+- **Function-based Index**:Indexes result of a function or expression (e.g., UPPER(name))
+- **Composite Index**:Index on multiple columns
+
+**Create a Simple Index**
+```
+CREATE INDEX idx_emp_name ON employees(last_name);
+```
+**Create a Composite Index**
+```
+CREATE INDEX idx_emp_dept_name ON employees(department_id, last_name);
+```
+**Unique Index**
+```
+CREATE UNIQUE INDEX idx_email ON users(email);
+```
+
+**🧼 Best Practices**
+
+- Index columns used in **WHERE, JOIN, ORDER BY, or GROUP BY**
+- Avoid over-indexing — only index what's queried often
+- Use bitmap indexes for low-cardinality columns
+- **Monitor** index usage and rebuild if fragmented
 
 
 
