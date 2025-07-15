@@ -99,4 +99,133 @@ There are two main rules for using Hooks:
 
 **Lifting state up** is a technique where you move the state from a child component to its closest common parent component. This allows multiple child components to share and synchronize their state. The parent component then passes the state and functions to update that state down to its children via props.
 
+**11. What is context API in React?**
+
+Context provides a way to **pass data** through the **component tree** without passing **props** manually at every level.
+```
+const MyContext = React.createContext();
+<MyContext.Provider value={value}>
+  <MyComponent />
+</MyContext.Provider>
+```
+**12. How does React handle reconciliation?**
+
+React compares the new Virtual DOM with the previous one (diffing) and updates only the parts of the actual DOM that changed (reconciliation).
+
+**13. What are Higher-Order Components (HOC)?**
+
+A HOC is a function that takes a component and returns a new component with enhanced behavior.
+```
+function withLogger(Component) {
+  return function Enhanced(props) {
+    console.log('Rendering', Component.name);
+    return <Component {...props} />;
+  }
+}
+```
+**14. What is React Router and why is it used? 🗺️**
+
+**React Router** is a standard library for routing in React applications. It enables you to create Single Page Applications (SPAs) with multiple views and allows for programmatic navigation. It keeps the UI in sync with the URL, providing a consistent user experience **without full page reloads**.
+```
+<Route path="/about" element={<About />} />
+```
+**15. How do you handle forms in React?**
+
+Using controlled components, managing state with **useState**, and handling **onSubmit**.
+```
+<form onSubmit={handleSubmit}>
+  <input value={name} onChange={e => setName(e.target.value)} />
+</form>
+```
+**17. How does React handle reconciliation?**
+
+React compares the new Virtual DOM with the previous one (diffing) and updates only the parts of the actual DOM that changed (reconciliation).
+
+**18. What is lazy loading in React?**
+
+Lazy loading means loading components only when needed using **React.lazy** and **Suspense**.
+```
+const LazyComponent = React.lazy(() => import('./LazyComponent'));
+
+<Suspense fallback={<div>Loading...</div>}>
+  <LazyComponent />
+</Suspense>
+```
+**19. What is controlled vs uncontrolled component?**
+| Controlled                    | Uncontrolled                    |
+| ----------------------------- | ------------------------------- |
+| Form data is handled by React | Form data is handled by the DOM |
+| Uses `useState`               | Uses `ref`                      |
+
+```
+// Controlled
+<input value={value} onChange={e => setValue(e.target.value)} />
+
+// Uncontrolled
+<input ref={inputRef} />
+```
+**20. What is useMemo and useCallback?**
+
+- **useMemo**: Caches expensive calculations.
+```
+const result = useMemo(() => expensiveCalculation(a, b), [a, b]);
+```
+- **useCallback**: Caches function instances.
+```
+const handleClick = useCallback(() => doSomething(), []);
+```
+**21. What is Axios interceptors in React**
+
+How to add a JWT (JSON Web Token) to the header of HTTP requests in a React application?
+
+To automatically add a JWT token to the header of all HTTP requests in a React application, the most common and maintainable method is to use Axios interceptors.
+This ensures that the token is automatically included in all outgoing requests without needing to manually add it to each one.
+
+**Create an Axios Instance**
+
+Create a reusable axios.js file (or axiosInstance.js) to configure the base URL and attach the token.
+```
+// src/api/axios.js
+import axios from 'axios';
+
+const axiosInstance = axios.create({
+  baseURL: 'https://your-api-domain.com/api', // Set your API base URL
+});
+
+// Request interceptor to add JWT token
+axiosInstance.interceptors.request.use(
+  config => {
+    const token = localStorage.getItem('jwtToken'); // or from Redux, Context, or Cookies
+
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+);
+
+export default axiosInstance;
+```
+**Use Axios Instance in Your Components or Services**
+```
+// src/services/userService.js
+import axios from '../api/axios';
+
+export const getUserProfile = async () => {
+  const response = await axios.get('/users/profile');
+  return response.data;
+};
+```
+**Store JWT Token After Login**
+
+When you log in and receive a JWT token:
+```
+// src/pages/Login.js
+localStorage.setItem('jwtToken', response.data.token);
+```
+
 
