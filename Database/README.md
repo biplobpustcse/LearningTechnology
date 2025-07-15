@@ -450,6 +450,20 @@ SET Gender = CASE
 | Performance  | Can be faster for small datasets | Can be faster for large datasets | 
 | Readability  | Can improve readability for complex queries | Can improve readability for complex queries | 
 
+**37 variable table vs temp table**
+
+A **variable table** and a **temp table** are both **temporary storage** structures in SQL Server, but they have distinct differences in their scope, behavior, and use cases.
+
+| **Feature**          | **Table Variable (`@table_variable`)**      | **Temporary Table (`#temp_table` / `##global_temp_table`)** |
+| -------------------- | ------------------------------------------- | ----------------------------------------------------------- |
+| **Declaration**      | `DECLARE @table_name TABLE (...)`           | `CREATE TABLE #table_name (...)`                            |
+| **Location**         | Primarily in memory (can spill to `tempdb`) | Stored in `tempdb` (disk-based)                             |
+| **Scope**            | Batch / Procedure / Function                | Session (`#`) or All Sessions (`##`)                        |
+| **Statistics**       | ❌ Not supported                             | ✅ Yes, supports statistics                                  |
+| **Transactionality** | ❌ Not fully transactional                   | ✅ Fully transactional                                       |
+| **Indexing**         | Limited (only `PRIMARY KEY` / `UNIQUE`)     | Full indexing support (clustered, non-clustered, etc.)      |
+| **Performance**      | Better for **small datasets**               | Better for **large datasets** and **complex queries**       |
+| **Overhead**         | Lower (lightweight)                         | Higher (more tempdb resource usage)                         |
 
 
 
