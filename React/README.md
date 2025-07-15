@@ -47,4 +47,20 @@ const element = (
 | Passed from parent | Managed within component |
 | External data      | Internal data            |
 
+**7. How to pass data from parent to child component?**
 
+Using **props**.
+```
+<ChildComponent name="Biplob" />
+```
+
+**5. What are components in React?**
+
+**React components** are the **building blocks** of a React application. There are two types:
+
+- **Functional Components** – use **hooks**, written as functions.
+
+These are simple JavaScript functions that accept **props** as an argument and return React elements (JSX). Before React Hooks, they were often called "stateless functional components" because they couldn't manage their own state. Now, with Hooks, they can be stateful.
+- **Class Components** – use **this** and **lifecycle methods**.
+
+These are ES6 classes that extend React.Component. They can hold and manage their own state using this.state and this.setState(), and they have access to lifecycle methods.
