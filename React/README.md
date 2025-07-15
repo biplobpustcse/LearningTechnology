@@ -30,3 +30,21 @@ const element = (
     </h1>
 );
 ```
+**5. What are Props in React? 📦**
+
+**Props** (short for properties) are **read-only attributes** passed from a **parent component to a child component**. They allow data and event handlers to flow down the component tree, enabling components to be reusable and customizable. **Props are immutable**, meaning a child component cannot directly modify the props it receives from its parent.
+
+**6. What is State in React? 🔄**
+
+**State** is an object managed within a component that **holds data** that can change over time and influences the component's rendering and behavior. Unlike props, state is **mutable** and is typically managed internally by the component itself. When the state changes, React re-renders the component.
+
+**7. Differentiate between Props and State. ⚖️**
+
+| Props (properties) | State                    |
+| ------------------ | ------------------------ |
+| Managed By Parent component | By Component itself |
+| Immutable (Read-only) | Mutable (can be changed) |
+| Passed from parent | Managed within component |
+| External data      | Internal data            |
+
+
