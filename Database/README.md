@@ -438,7 +438,17 @@ SET Gender = CASE
                WHEN Gender = 'F' THEN 'M'
              END;
 ```
+**36. CTE vs temp table**
+**CTEs** (Common Table Expressions) and **Temporary Tables** are both used **to simplify complex SQL queries** by **breaking them down into smaller**, more manageable parts. However, they differ in their **scope and storage**. **CTEs** are temporary result sets defined within a **single query** and are not stored persistently, while **temporary tables** are **actual tables** stored in the **tempdb database** and can be accessed across **multiple queries** within the same session. 
 
+| Feature      | CTE                                                  | Temporary Table                         |
+| ------------ | ------------------------------------------------     | --------------------------------------- |
+| Storage      | In-memory |  not stored on disk Stored in tempdb database | 
+| Scope        | Within a single query | Across multiple queries in the session| 
+| Reusability  |  Not reusable across queries |  Reusable within the session| 
+| Indexing     | Not supported | Supported | 
+| Performance  | Can be faster for small datasets | Can be faster for large datasets | 
+| Readability  | Can improve readability for complex queries | Can improve readability for complex queries | 
 
 
 
