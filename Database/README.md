@@ -533,3 +533,57 @@ SET TRANSACTION ISOLATION LEVEL SNAPSHOT;
 | Repeatable Read  | ❌ Blocked  | ❌ Blocked           | ✅ Allowed    |
 | Serializable     | ❌ Blocked  | ❌ Blocked           | ❌ Blocked    |
 | Snapshot         | ❌ Blocked  | ❌ Blocked           | ❌ Blocked    |
+
+✅ Summary:
+
+- SQL Server defaults to READ COMMITTED.
+- Higher isolation = more consistency, less concurrency.
+- SNAPSHOT often provides a great balance in real-world apps.
+
+🔹 Trade-off: Consistency vs. Performance
+
+- If you choose **SERIALIZABLE**, you’ll guarantee correctness but your system may face blocking and deadlocks under load.
+- If you choose **READ COMMITTED (default)**, you get decent performance but may still face issues like phantom rows (e.g., two sales both see the same stock item available).
+- If you choose **SNAPSHOT**, you get consistency without blocking readers, which is usually perfect for reporting and high concurrency reads.
+
+**🔹 Recommended Isolation Strategy for POS API**
+
+👉 Combination approach (not one-size-fits-all):
+
+**1. Transactions that update money or stock (critical):**
+
+- Use SERIALIZABLE to avoid overselling inventory or double-spending.
+- Example: deducting stock when a sale is confirmed.
+```
+using var tx = connection.BeginTransaction(IsolationLevel.Serializable);
+```
+
+**2. General read operations (non-critical, like reports, UI listing):**
+
+- Use **SNAPSHOT** (if enabled) or **READ COMMITTED** to reduce locking.
+- Snapshot ensures consistency without blocking writes.
+
+**3. Background reporting / analytics:**
+
+- Use **SNAPSHOT** isolation for consistent point-in-time reads across huge tables.
+
+**🔹 Enabling Best Mix in SQL Server**
+
+1. Allow snapshot reads:
+```
+ALTER DATABASE POSDB SET READ_COMMITTED_SNAPSHOT ON;
+ALTER DATABASE POSDB SET ALLOW_SNAPSHOT_ISOLATION ON;
+```
+- This changes the default behavior of READ COMMITTED to use row versioning instead of blocking.
+- Great for POS apps where reads shouldn’t block sales transactions.
+
+2. In .NET Core, specify isolation per transaction:
+```
+using var transaction = await connection.BeginTransactionAsync(IsolationLevel.Serializable);
+// For critical updates like payment or inventory deduction
+```
+```
+using var transaction = await connection.BeginTransactionAsync(IsolationLevel.ReadCommitted);
+// For safe reads
+```
+
