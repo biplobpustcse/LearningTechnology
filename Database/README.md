@@ -465,6 +465,71 @@ A **variable table** and a **temp table** are both **temporary storage** structu
 | **Performance**      | Better for **small datasets**               | Better for **large datasets** and **complex queries**       |
 | **Overhead**         | Lower (lightweight)                         | Higher (more tempdb resource usage)                         |
 
+**38. What is database Isolation**
 
+- **Isolation** is one of the **ACID properties** of transactions.
+- It ensures that concurrently running transactions do not interfere with each other’s operations, so the result is **as if transactions ran sequentially.**
 
+**🔹 Why is it Important?**
 
+- Without isolation, issues like **dirty reads, non-repeatable reads, and phantom reads** can occur.
+- SQL Server provides different isolation levels to balance data **consistency vs. system performance**.
+
+**🔹 SQL Server Isolation Levels**
+
+SQL Server supports the following transaction isolation levels:
+
+**1. READ UNCOMMITTED**
+
+- Lowest isolation level.
+- Allows dirty reads (reading uncommitted data).
+- Highest concurrency, lowest consistency.
+
+```
+SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+```
+**2. READ COMMITTED (default in SQL Server)**
+
+- Prevents dirty reads (cannot read uncommitted data).
+- Still allows non-repeatable reads and phantoms.
+```
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+```
+**3. REPEATABLE READ**
+
+- Prevents dirty reads + non-repeatable reads.
+- Still allows phantoms (new rows can appear).
+```
+SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+```
+**4. SERIALIZABLE**
+
+- Highest isolation level.
+- Prevents dirty reads, non-repeatable reads, and phantoms.
+- Works like transactions run one after another.
+- Ensures maximum consistency, but lowest concurrency.
+```
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+```
+**5. SNAPSHOT (SQL Server–specific)**
+
+- Uses row versioning in tempdb.
+- Each transaction sees a snapshot of the data as it was when the transaction started.
+- Prevents dirty reads, non-repeatable reads, and phantoms without blocking.
+- Must enable first:
+```
+ALTER DATABASE MyDB SET ALLOW_SNAPSHOT_ISOLATION ON;
+```
+Then use:
+```
+SET TRANSACTION ISOLATION LEVEL SNAPSHOT;
+```
+**🔹 Phenomena at Each Level**
+
+| Isolation Level  | Dirty Read | Non-Repeatable Read | Phantom Read |
+| ---------------- | ---------- | ------------------- | ------------ |
+| Read Uncommitted | ✅ Allowed  | ✅ Allowed           | ✅ Allowed    |
+| Read Committed   | ❌ Blocked  | ✅ Allowed           | ✅ Allowed    |
+| Repeatable Read  | ❌ Blocked  | ❌ Blocked           | ✅ Allowed    |
+| Serializable     | ❌ Blocked  | ❌ Blocked           | ❌ Blocked    |
+| Snapshot         | ❌ Blocked  | ❌ Blocked           | ❌ Blocked    |
